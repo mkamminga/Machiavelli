@@ -8,6 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		9E143B0E1D4A73DB0073B51B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E143B0D1D4A73DB0073B51B /* main.cpp */; };
+		9E143B1C1D4A74640073B51B /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E143B151D4A74640073B51B /* Player.cpp */; };
+		9E143B1D1D4A74640073B51B /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E143B171D4A74640073B51B /* Socket.cpp */; };
+		9E143B1E1D4A74640073B51B /* throw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E143B1A1D4A74640073B51B /* throw.cpp */; };
+		9E5E07851D4CD2F8006D5063 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07831D4CD2F8006D5063 /* Game.cpp */; };
+		9E5E07881D4CD30F006D5063 /* Round.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07861D4CD30F006D5063 /* Round.cpp */; };
+		9E5E078B1D4CD33A006D5063 /* BaseCharacter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07891D4CD33A006D5063 /* BaseCharacter.cpp */; };
+		9E5E078E1D4CD354006D5063 /* BaseCard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E078C1D4CD354006D5063 /* BaseCard.cpp */; };
+		9E5E07931D4CD3E1006D5063 /* Controllers in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07911D4CD3E1006D5063 /* Controllers */; };
+		9E5E07961D4CD492006D5063 /* MainProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07941D4CD492006D5063 /* MainProcessor.cpp */; };
+		9E5E07991D4CD4B9006D5063 /* MurdererProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07971D4CD4B9006D5063 /* MurdererProcessor.cpp */; };
+		9E5E079C1D4CD4E5006D5063 /* Process in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E079A1D4CD4E5006D5063 /* Process */; };
+		9E5E079F1D4CDE6C006D5063 /* WizzardProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E079D1D4CDE6C006D5063 /* WizzardProcessor.cpp */; };
+		9E5E07A21D4CDE8F006D5063 /* PreacherProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07A01D4CDE8F006D5063 /* PreacherProcessor.cpp */; };
+		9E5E07A51D4CDEAA006D5063 /* MerchantProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07A31D4CDEAA006D5063 /* MerchantProcessor.cpp */; };
+		9E5E07A81D4CDECD006D5063 /* BuildmasterProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07A61D4CDECD006D5063 /* BuildmasterProcessor.cpp */; };
+		9E5E07AB1D4CDEE6006D5063 /* CondottieriProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07A91D4CDEE6006D5063 /* CondottieriProcessor.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +41,40 @@
 /* Begin PBXFileReference section */
 		9E143B0A1D4A73DB0073B51B /* Machiavelli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Machiavelli; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E143B0D1D4A73DB0073B51B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		9E143B141D4A74640073B51B /* ClientCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientCommand.h; sourceTree = "<group>"; };
+		9E143B151D4A74640073B51B /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		9E143B161D4A74640073B51B /* Player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
+		9E143B171D4A74640073B51B /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Socket.cpp; sourceTree = "<group>"; };
+		9E143B181D4A74640073B51B /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Socket.h; sourceTree = "<group>"; };
+		9E143B191D4A74640073B51B /* Sync_queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sync_queue.h; sourceTree = "<group>"; };
+		9E143B1A1D4A74640073B51B /* throw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = throw.cpp; sourceTree = "<group>"; };
+		9E143B1B1D4A74640073B51B /* throw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = throw.h; sourceTree = "<group>"; };
+		9E5E07831D4CD2F8006D5063 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = Models/Game.cpp; sourceTree = "<group>"; };
+		9E5E07841D4CD2F8006D5063 /* Game.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Game.hpp; path = Models/Game.hpp; sourceTree = "<group>"; };
+		9E5E07861D4CD30F006D5063 /* Round.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Round.cpp; path = Models/Round.cpp; sourceTree = "<group>"; };
+		9E5E07871D4CD30F006D5063 /* Round.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Round.hpp; path = Models/Round.hpp; sourceTree = "<group>"; };
+		9E5E07891D4CD33A006D5063 /* BaseCharacter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseCharacter.cpp; path = Models/BaseCharacter.cpp; sourceTree = "<group>"; };
+		9E5E078A1D4CD33A006D5063 /* BaseCharacter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = BaseCharacter.hpp; path = Models/BaseCharacter.hpp; sourceTree = "<group>"; };
+		9E5E078C1D4CD354006D5063 /* BaseCard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseCard.cpp; path = Models/BaseCard.cpp; sourceTree = "<group>"; };
+		9E5E078D1D4CD354006D5063 /* BaseCard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = BaseCard.hpp; path = Models/BaseCard.hpp; sourceTree = "<group>"; };
+		9E5E07911D4CD3E1006D5063 /* Controllers */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; path = Controllers; sourceTree = "<group>"; };
+		9E5E07921D4CD3E1006D5063 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameController.hpp; path = Controllers/GameController.hpp; sourceTree = "<group>"; };
+		9E5E07941D4CD492006D5063 /* MainProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainProcessor.cpp; path = Process/MainProcessor.cpp; sourceTree = "<group>"; };
+		9E5E07951D4CD492006D5063 /* MainProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MainProcessor.hpp; path = Process/MainProcessor.hpp; sourceTree = "<group>"; };
+		9E5E07971D4CD4B9006D5063 /* MurdererProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MurdererProcessor.cpp; path = Process/MurdererProcessor.cpp; sourceTree = "<group>"; };
+		9E5E07981D4CD4B9006D5063 /* MurdererProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MurdererProcessor.hpp; path = Process/MurdererProcessor.hpp; sourceTree = "<group>"; };
+		9E5E079A1D4CD4E5006D5063 /* Process */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; path = Process; sourceTree = "<group>"; };
+		9E5E079B1D4CD4E5006D5063 /* Process */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; path = Process; sourceTree = "<group>"; };
+		9E5E079D1D4CDE6C006D5063 /* WizzardProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WizzardProcessor.cpp; path = Process/WizzardProcessor.cpp; sourceTree = "<group>"; };
+		9E5E079E1D4CDE6C006D5063 /* WizzardProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = WizzardProcessor.hpp; path = Process/WizzardProcessor.hpp; sourceTree = "<group>"; };
+		9E5E07A01D4CDE8F006D5063 /* PreacherProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PreacherProcessor.cpp; path = Process/PreacherProcessor.cpp; sourceTree = "<group>"; };
+		9E5E07A11D4CDE8F006D5063 /* PreacherProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PreacherProcessor.hpp; path = Process/PreacherProcessor.hpp; sourceTree = "<group>"; };
+		9E5E07A31D4CDEAA006D5063 /* MerchantProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MerchantProcessor.cpp; path = Process/MerchantProcessor.cpp; sourceTree = "<group>"; };
+		9E5E07A41D4CDEAA006D5063 /* MerchantProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MerchantProcessor.hpp; path = Process/MerchantProcessor.hpp; sourceTree = "<group>"; };
+		9E5E07A61D4CDECD006D5063 /* BuildmasterProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BuildmasterProcessor.cpp; path = Process/BuildmasterProcessor.cpp; sourceTree = "<group>"; };
+		9E5E07A71D4CDECD006D5063 /* BuildmasterProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = BuildmasterProcessor.hpp; path = Process/BuildmasterProcessor.hpp; sourceTree = "<group>"; };
+		9E5E07A91D4CDEE6006D5063 /* CondottieriProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CondottieriProcessor.cpp; path = Process/CondottieriProcessor.cpp; sourceTree = "<group>"; };
+		9E5E07AA1D4CDEE6006D5063 /* CondottieriProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CondottieriProcessor.hpp; path = Process/CondottieriProcessor.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +107,67 @@
 		9E143B0C1D4A73DB0073B51B /* Machiavelli */ = {
 			isa = PBXGroup;
 			children = (
+				9E5E07901D4CD391006D5063 /* Process */,
+				9E5E07821D4CD2BC006D5063 /* Controllers */,
+				9E5E07811D4CD2B2006D5063 /* Models */,
+				9E143B141D4A74640073B51B /* ClientCommand.h */,
+				9E143B151D4A74640073B51B /* Player.cpp */,
+				9E143B161D4A74640073B51B /* Player.hpp */,
+				9E143B171D4A74640073B51B /* Socket.cpp */,
+				9E143B181D4A74640073B51B /* Socket.h */,
+				9E143B191D4A74640073B51B /* Sync_queue.h */,
+				9E143B1A1D4A74640073B51B /* throw.cpp */,
+				9E143B1B1D4A74640073B51B /* throw.h */,
 				9E143B0D1D4A73DB0073B51B /* main.cpp */,
 			);
 			path = Machiavelli;
+			sourceTree = "<group>";
+		};
+		9E5E07811D4CD2B2006D5063 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9E5E07831D4CD2F8006D5063 /* Game.cpp */,
+				9E5E07841D4CD2F8006D5063 /* Game.hpp */,
+				9E5E07861D4CD30F006D5063 /* Round.cpp */,
+				9E5E07871D4CD30F006D5063 /* Round.hpp */,
+				9E5E07891D4CD33A006D5063 /* BaseCharacter.cpp */,
+				9E5E078A1D4CD33A006D5063 /* BaseCharacter.hpp */,
+				9E5E078C1D4CD354006D5063 /* BaseCard.cpp */,
+				9E5E078D1D4CD354006D5063 /* BaseCard.hpp */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		9E5E07821D4CD2BC006D5063 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9E5E07911D4CD3E1006D5063 /* Controllers */,
+				9E5E07921D4CD3E1006D5063 /* GameController.hpp */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		9E5E07901D4CD391006D5063 /* Process */ = {
+			isa = PBXGroup;
+			children = (
+				9E5E07941D4CD492006D5063 /* MainProcessor.cpp */,
+				9E5E07951D4CD492006D5063 /* MainProcessor.hpp */,
+				9E5E07971D4CD4B9006D5063 /* MurdererProcessor.cpp */,
+				9E5E07981D4CD4B9006D5063 /* MurdererProcessor.hpp */,
+				9E5E079A1D4CD4E5006D5063 /* Process */,
+				9E5E079B1D4CD4E5006D5063 /* Process */,
+				9E5E079D1D4CDE6C006D5063 /* WizzardProcessor.cpp */,
+				9E5E079E1D4CDE6C006D5063 /* WizzardProcessor.hpp */,
+				9E5E07A01D4CDE8F006D5063 /* PreacherProcessor.cpp */,
+				9E5E07A11D4CDE8F006D5063 /* PreacherProcessor.hpp */,
+				9E5E07A31D4CDEAA006D5063 /* MerchantProcessor.cpp */,
+				9E5E07A41D4CDEAA006D5063 /* MerchantProcessor.hpp */,
+				9E5E07A61D4CDECD006D5063 /* BuildmasterProcessor.cpp */,
+				9E5E07A71D4CDECD006D5063 /* BuildmasterProcessor.hpp */,
+				9E5E07A91D4CDEE6006D5063 /* CondottieriProcessor.cpp */,
+				9E5E07AA1D4CDEE6006D5063 /* CondottieriProcessor.hpp */,
+			);
+			name = Process;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +226,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E5E07A21D4CDE8F006D5063 /* PreacherProcessor.cpp in Sources */,
+				9E143B1C1D4A74640073B51B /* Player.cpp in Sources */,
+				9E143B1D1D4A74640073B51B /* Socket.cpp in Sources */,
+				9E5E078E1D4CD354006D5063 /* BaseCard.cpp in Sources */,
+				9E5E07961D4CD492006D5063 /* MainProcessor.cpp in Sources */,
+				9E5E07A81D4CDECD006D5063 /* BuildmasterProcessor.cpp in Sources */,
+				9E5E078B1D4CD33A006D5063 /* BaseCharacter.cpp in Sources */,
+				9E5E07931D4CD3E1006D5063 /* Controllers in Sources */,
+				9E5E079F1D4CDE6C006D5063 /* WizzardProcessor.cpp in Sources */,
+				9E143B1E1D4A74640073B51B /* throw.cpp in Sources */,
+				9E5E079C1D4CD4E5006D5063 /* Process in Sources */,
+				9E5E07A51D4CDEAA006D5063 /* MerchantProcessor.cpp in Sources */,
 				9E143B0E1D4A73DB0073B51B /* main.cpp in Sources */,
+				9E5E07881D4CD30F006D5063 /* Round.cpp in Sources */,
+				9E5E07991D4CD4B9006D5063 /* MurdererProcessor.cpp in Sources */,
+				9E5E07851D4CD2F8006D5063 /* Game.cpp in Sources */,
+				9E5E07AB1D4CDEE6006D5063 /* CondottieriProcessor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +363,7 @@
 				9E143B131D4A73DB0073B51B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
