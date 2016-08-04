@@ -11,4 +11,14 @@
 
 #include <stdio.h>
 
+enum Characters {
+    MURDERER,
+    THIEF,
+    WIZZARD,
+    PREACHER,
+    MERCHANT,
+    MASTER_BUILER,
+    CONDOTTIERI
+};
+
 #endif /* BaseCharacter_hpp */

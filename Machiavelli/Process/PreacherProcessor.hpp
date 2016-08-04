@@ -11,4 +11,10 @@
 
 #include <stdio.h>
 
+#include "MainProcessor.hpp"
+
+class PreacherProcessor : public MainProcessor {
+    
+};
+
 #endif /* PreacherProcessor_hpp */

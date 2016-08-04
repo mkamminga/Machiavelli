@@ -11,4 +11,9 @@
 
 #include <stdio.h>
 
+class MainProcessor {
+protected:
+    virtual void handleSpecialFeature() {};
+};
+
 #endif /* MainProcessor_hpp */

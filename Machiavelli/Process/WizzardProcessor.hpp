@@ -11,4 +11,10 @@
 
 #include <stdio.h>
 
+#include "MainProcessor.hpp"
+
+class WizzardProcessor : public MainProcessor {
+    
+};
+
 #endif /* WizzardProcessor_hpp */

@@ -10,5 +10,19 @@
 #define Game_hpp
 
 #include <stdio.h>
+#include <vector>
+#include "BaseCard.hpp"
+
+class Game {
+public:
+    void addCard(std::shared_ptr<BaseCard> card);
+    ~Game() {
+        
+    }
+    
+private:
+    std::vector<std::shared_ptr<BaseCard>> availibleCards;
+    std::vector<std::shared_ptr<BaseCard>> laidoutCards;
+};
 
 #endif /* Game_hpp */

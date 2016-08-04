@@ -18,6 +18,7 @@ using namespace std;
 #include "Sync_queue.h"
 #include "ClientCommand.h"
 #include "Player.hpp"
+#include "Controllers/GameController.hpp"
 
 namespace machiavelli {
     const int tcp_port {1080};
@@ -25,6 +26,7 @@ namespace machiavelli {
 }
 
 static Sync_queue<ClientCommand> queue;
+static GameController gameController;
 
 void consume_command() // runs in its own thread
 {
@@ -33,9 +35,12 @@ void consume_command() // runs in its own thread
 			ClientCommand command {queue.get()}; // will block here unless there are any command objects in the queue
 			shared_ptr<Socket> client {command.get_client()};
 			shared_ptr<Player> player {command.get_player()};
+            
+            
 			try {
 				// TODO handle command here
-				*client << player->get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n" << machiavelli::prompt;
+                gameController.handleCommand(command.get_cmd());
+                //*client << player->get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n" << machiavelli::prompt;
 			} catch (const exception& ex) {
 				cerr << "*** exception in consumer thread for player " << player->get_name() << ": " << ex.what() << '\n';
 				if (client->is_open()) {
@@ -62,8 +67,16 @@ void handle_client(shared_ptr<Socket> client) // this function runs in a separat
 		string name {client->readline()};
 		shared_ptr<Player> player {new Player {name}};
 		*client << "Welcome, " << name << ", have fun playing our game!\r\n" << machiavelli::prompt;
+        
+        gameController.addPlayer(player);
+        
+        if (gameController.canStart()) {
+            gameController.start();
+        } else {
+            //wait for all players
+        }
 
-        while (true) { // game loop
+        while (!gameController.isGameOver()) { // game loop
             try {
                 // read first line of request
 				string cmd {client->readline()};
@@ -105,17 +118,21 @@ int main(int argc, const char * argv[])
     
 	// create a server socket
 	ServerSocket server {machiavelli::tcp_port};
-	
+    
 	while (true) {
 		try {
 			while (true) {
 				// wait for connection from client; will create new socket
 				cerr << "server listening" << '\n';
 				unique_ptr<Socket> client {server.accept()};
-
-				// communicate with client over new socket in separate thread
-                thread handler {handle_client, move(client)};
-				handlers.push_back(move(handler));
+                
+                if (!gameController.hasStarted()){
+                    // communicate with client over new socket in separate thread
+                    thread handler {handle_client, move(client)};
+                    handlers.push_back(move(handler));
+                } else if (gameController.isGameOver()) {
+                    break;
+                }
 			}
 		} catch (const exception& ex) {
 			cerr << ex.what() << ", resuming..." << '\n';
@@ -123,6 +140,7 @@ int main(int argc, const char * argv[])
             cerr << "problems, problems, but: keep calm and carry on!\n";
         }
 	}
+    
     return 0;
 }
 

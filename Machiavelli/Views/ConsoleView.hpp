@@ -1,13 +1,14 @@
 //
-//  Game.cpp
+//  ConsoleView.hpp
 //  Machiavelli
 //
 //  Created by Mark Jan Kamminga on 30-07-16.
 //  Copyright © 2016 Mark Jan Kamminga. All rights reserved.
 //
 
-#include "Game.hpp"
+#ifndef ConsoleView_hpp
+#define ConsoleView_hpp
 
-void Game::addCard(std::shared_ptr<BaseCard> card){
-    availibleCards.push_back(card);
-}
+#include <stdio.h>
+
+#endif /* ConsoleView_hpp */

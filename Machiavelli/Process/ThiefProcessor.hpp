@@ -11,4 +11,10 @@
 
 #include <stdio.h>
 
+#include "MainProcessor.hpp"
+
+class ThiefProcessor : public MainProcessor {
+    
+};
+
 #endif /* ThiefProcessor_hpp */

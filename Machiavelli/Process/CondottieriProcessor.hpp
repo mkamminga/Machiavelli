@@ -11,4 +11,10 @@
 
 #include <stdio.h>
 
+#include "MainProcessor.hpp"
+
+class CondottieriProcessor : public MainProcessor {
+    
+};
+
 #endif /* CondottieriProcessor_hpp */

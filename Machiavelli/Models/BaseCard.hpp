@@ -11,4 +11,19 @@
 
 #include <stdio.h>
 
+enum CardColours {
+    GREEN,
+    YELLOW,
+    RED,
+    PURPLE,
+    BLUE
+};
+
+class BaseCard {
+public:
+    BaseCard (int cardColour, int points): colour(cardColour),points(points){};
+private:
+    int colour;
+    int points;
+};
 #endif /* BaseCard_hpp */

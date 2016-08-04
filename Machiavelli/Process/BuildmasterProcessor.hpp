@@ -11,4 +11,10 @@
 
 #include <stdio.h>
 
+#include "MainProcessor.hpp"
+
+class BuildmasterProcessor : public MainProcessor {
+    
+};
+
 #endif /* BuildmasterProcessor_hpp */

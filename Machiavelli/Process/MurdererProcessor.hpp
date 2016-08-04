@@ -10,5 +10,11 @@
 #define MurdererProcessor_hpp
 
 #include <stdio.h>
+#include "MainProcessor.hpp"
+
+class MurdererProcessor : public MainProcessor {
+public:
+    virtual void handleSpecialFeature();
+};
 
 #endif /* MurdererProcessor_hpp */

@@ -11,4 +11,10 @@
 
 #include <stdio.h>
 
+#include "MainProcessor.hpp"
+
+class MerchantProcessor : public MainProcessor {
+    
+};
+
 #endif /* MerchantProcessor_hpp */

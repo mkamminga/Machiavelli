@@ -11,6 +11,8 @@
 
 #include <string>
 #include <memory>
+#include "Controllers/GameController.hpp"
+
 class Player;
 class Socket;
 
