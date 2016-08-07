@@ -7,3 +7,8 @@
 //
 
 #include "BaseCharacter.hpp"
+#include "../Player.hpp"
+
+void BaseCharacter::setPlayer(std::shared_ptr<Player> player){
+    this->player = player;
+};

@@ -10,6 +10,9 @@
 #define BaseCharacter_hpp
 
 #include <stdio.h>
+#include <string>
+
+class Player;
 
 enum Characters {
     MURDERER,
@@ -19,6 +22,19 @@ enum Characters {
     MERCHANT,
     MASTER_BUILER,
     CONDOTTIERI
+};
+
+class BaseCharacter {
+public:
+    BaseCharacter(int type, const std::string& name): type(type), name(name) {};
+    const std::string getname () { return name; }
+    const int getType () { return type; }
+    void setPlayer(std::shared_ptr<Player> player);
+    
+private:
+    int type;
+    std::string name;
+    std::shared_ptr<Player> player = nullptr;
 };
 
 #endif /* BaseCharacter_hpp */

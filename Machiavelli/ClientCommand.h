@@ -20,7 +20,6 @@ class ClientCommand {
 public:
 	ClientCommand(const std::string& cmd, std::shared_ptr<Socket> client, std::shared_ptr<Player> player)
 	: cmd{cmd}, client {client}, player{player} {
-        string a;
     }
 
     std::string get_cmd() const { return cmd; }

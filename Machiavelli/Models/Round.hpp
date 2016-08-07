@@ -11,4 +11,13 @@
 
 #include <stdio.h>
 
+#include "BaseCharacter.hpp"
+
+class Round {
+public:
+    
+private:
+    
+};
+
 #endif /* Round_hpp */

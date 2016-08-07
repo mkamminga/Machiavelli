@@ -12,6 +12,7 @@
 #include <memory>
 #include <utility>
 #include <vector>
+
 using namespace std;
 
 #include "Socket.h"
@@ -25,40 +26,9 @@ namespace machiavelli {
     const string prompt {"machiavelli> "};
 }
 
-static Sync_queue<ClientCommand> queue;
-static GameController gameController;
 
-void consume_command() // runs in its own thread
-{
-    try {
-        while (true) {
-			ClientCommand command {queue.get()}; // will block here unless there are any command objects in the queue
-			shared_ptr<Socket> client {command.get_client()};
-			shared_ptr<Player> player {command.get_player()};
-            
-            
-			try {
-				// TODO handle command here
-                gameController.handleCommand(command.get_cmd());
-                //*client << player->get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n" << machiavelli::prompt;
-			} catch (const exception& ex) {
-				cerr << "*** exception in consumer thread for player " << player->get_name() << ": " << ex.what() << '\n';
-				if (client->is_open()) {
-					client->write("Sorry, something went wrong during handling of your request.\r\n");
-				}
-			} catch (...) {
-				cerr << "*** exception in consumer thread for player " << player->get_name() << '\n';
-				if (client->is_open()) {
-					client->write("Sorry, something went wrong during handling of your request.\r\n");
-				}
-			}
-        }
-    } catch (...) {
-        cerr << "consume_command crashed\n";
-    }
-}
 
-void handle_client(shared_ptr<Socket> client) // this function runs in a separate thread
+void handle_client(shared_ptr<Socket> client, GameController* gameController) // this function runs in a separate thread
 {
     try {
         client->write("Welcome to Server 1.0! To quit, type 'quit'.\r\n");
@@ -68,51 +38,48 @@ void handle_client(shared_ptr<Socket> client) // this function runs in a separat
 		shared_ptr<Player> player {new Player {name}};
 		*client << "Welcome, " << name << ", have fun playing our game!\r\n" << machiavelli::prompt;
         
-        gameController.addPlayer(player);
+        gameController->addPlayer(player, client);
         
-        if (gameController.canStart()) {
-            gameController.start();
+        if (gameController->canStart()) {
+            client->write("You have been proclaimed king!.\r\n");
+            gameController->start();
+
+            while (!gameController->isGameOver()) { // game loop
+                try {
+                    //Round start, 
+                    gameController->startRound();
+                    // ->
+                    // 2. Character handle
+                    // <-
+                    gameController->callCharcaters();
+                    cerr << '[' << client->get_dotted_ip() << " (" << client->get_socket() << ") " << player->get_name() << "] "  << '\n';
+                    
+                } catch (const exception& ex) {
+                    cerr << "*** exception in client handler thread for player " << player->get_name() << ": " << ex.what() << '\n';
+                    if (client->is_open()) {
+                        *client << "ERROR: " << ex.what() << "\r\n";
+                    }
+                } catch (...) {
+                    cerr << "*** exception in client handler thread for player " << player->get_name() << '\n';
+                    if (client->is_open()) {
+                        client->write("ERROR: something went wrong during handling of your request. Sorry!\r\n");
+                    }
+                }
+            }
+
         } else {
             //wait for all players
+            client->write("Waiting for other player to join.\r\n");
         }
-
-        while (!gameController.isGameOver()) { // game loop
-            try {
-                // read first line of request
-				string cmd {client->readline()};
-				cerr << '[' << client->get_dotted_ip() << " (" << client->get_socket() << ") " << player->get_name() << "] " << cmd << '\n';
-				
-				if (cmd == "quit") {
-					client->write("Bye!\r\n");
-					break;
-				}
-
-                ClientCommand command {cmd, client, player};
-                queue.put(command);
-
-            } catch (const exception& ex) {
-				cerr << "*** exception in client handler thread for player " << player->get_name() << ": " << ex.what() << '\n';
-				if (client->is_open()) {
-					*client << "ERROR: " << ex.what() << "\r\n";
-				}
-            } catch (...) {
-				cerr << "*** exception in client handler thread for player " << player->get_name() << '\n';
-				if (client->is_open()) {
-					client->write("ERROR: something went wrong during handling of your request. Sorry!\r\n");
-				}
-            }
-        }
-		if (client->is_open()) client->close();
 	} catch (...) {
+        gameController->quit();
         cerr << "handle_client crashed\n";
     }
 }
 
 int main(int argc, const char * argv[])
 {
-    // start command consumer thread
-    thread consumer {consume_command};
-
+    GameController gameController;
     // keep client threads here, so we don't need to detach them
     vector<thread> handlers;
     
@@ -128,10 +95,14 @@ int main(int argc, const char * argv[])
                 
                 if (!gameController.hasStarted()){
                     // communicate with client over new socket in separate thread
-                    thread handler {handle_client, move(client)};
+                    thread handler {handle_client, move(client), &gameController};
                     handlers.push_back(move(handler));
                 } else if (gameController.isGameOver()) {
-                    break;
+                    //exit
+                    return 0;
+                } else {
+                    client->write("I'm so sorry, the maximum amount of players has already been reached!");
+                    client->close();
                 }
 			}
 		} catch (const exception& ex) {
@@ -139,6 +110,7 @@ int main(int argc, const char * argv[])
         } catch (...) {
             cerr << "problems, problems, but: keep calm and carry on!\n";
         }
+        
 	}
     
     return 0;

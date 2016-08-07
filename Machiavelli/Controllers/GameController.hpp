@@ -12,35 +12,47 @@
 #include <stdio.h>
 #include <map>
 #include <string>
+#include <mutex>              // std::mutex, std::unique_lock
+#include <condition_variable> // std::condition_variable
+
+#include "../Socket.h"
+#include "../Sync_queue.h"
+#include "../ClientCommand.h"
+
 #include "../Process/MainProcessor.hpp"
 #include "../Player.hpp"
 #include "../Models/Game.hpp"
 #include "../Process/MainProcessor.hpp"
+#include "../Models/Round.hpp"
+
 
 class GameController {
 public:
     GameController();
-    
-    void addPlayer(std::shared_ptr<Player> player);
+    ~GameController(){
+        quit();
+    }
+    void addPlayer(std::shared_ptr<Player> player, std::shared_ptr<Socket> client);
     bool start();
     bool isGameOver();
     bool hasStarted();
     bool canStart();
-    void handleCommand (const std::string& cmd);
+    void startRound();
+    void callCharcaters();
+    void quit();
+    
 private:
     void setupCards();
     void setupCharacters();
     void setupProcessors();
+    std::shared_ptr<BaseCharacter> removeChoseCharacter(const std::string& question, std::shared_ptr<Socket> client, std::vector<std::shared_ptr<BaseCharacter>>& characters);
     
     std::shared_ptr<Game> game = nullptr;
-    std::shared_ptr<Player> firstPlayer = nullptr;
-    std::shared_ptr<Player> secondPlayer = nullptr;
-    
     std::map<int, std::unique_ptr<MainProcessor>> processors;
-
+    std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>> players;
+    std::vector<std::shared_ptr<BaseCharacter>> characters;
     bool gameOver = false;
     bool gameStarted = false;
-    
     
 };
 
