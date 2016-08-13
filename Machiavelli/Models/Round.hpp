@@ -40,6 +40,10 @@ public:
         return currentCharacter;
     }
     
+    std::shared_ptr<Game> getGame () {
+        return game;
+    }
+    
 private:
     std::shared_ptr<Game> game;
     int characters[7];

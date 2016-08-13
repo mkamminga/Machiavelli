@@ -47,12 +47,14 @@ bool GameController::isGameOver() {
 
 void GameController::setupCards() {
     //TODO implement import to replace hardcoded setup
-    game->addCard(std::shared_ptr<BaseCard>(new BaseCard(YELLOW, 2)));
-    game->addCard(std::shared_ptr<BaseCard>(new BaseCard(RED, 7)));
-    game->addCard(std::shared_ptr<BaseCard>(new BaseCard(BLUE, 2)));
-    game->addCard(std::shared_ptr<BaseCard>(new BaseCard(RED, 4)));
-    game->addCard(std::shared_ptr<BaseCard>(new BaseCard(PURPLE, 6)));
-    game->addCard(std::shared_ptr<BaseCard>(new BaseCard(YELLOW, 2)));
+    for (int i = 0; i < 3; i++) {
+        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(YELLOW, "Geel", 2)));
+        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(RED, "Rood", 7)));
+        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(BLUE, "Blauw", 2)));
+        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(RED, "Rood", 4)));
+        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(PURPLE, "Paars", 6)));
+        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(YELLOW, "Geel", 2)));
+    }
 }
 
 void GameController::setupCharacters() {

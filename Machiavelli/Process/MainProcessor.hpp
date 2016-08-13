@@ -27,10 +27,11 @@ private:
     
 protected:
     virtual void handleSpecialFeature()  = 0;
-    void askMainQuestion(std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>> &players, std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>& playerClient);
-    void handleIncomePhase();
-    void handlePickCardPhase();
+    void askMainQuestion(std::shared_ptr<Round> round, std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>> &players, std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>& playerClient);
+    void handleIncomePhase(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<Socket> client);
+    void handlePickCardPhase(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<Socket> client, std::string& broadcastMessage);
     void handleBuildPhase();
+    void broadcastToPlayers(std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>> &players, const std::string& message);
     
     std::vector<std::string> allowedCommands;
 };

@@ -10,6 +10,7 @@
 #define BaseCard_hpp
 
 #include <stdio.h>
+#include <string>
 
 enum CardColours {
     GREEN,
@@ -21,9 +22,23 @@ enum CardColours {
 
 class BaseCard {
 public:
-    BaseCard (int cardColour, int points): colour(cardColour),points(points){};
+    BaseCard (int cardColour, std::string name, int points): colour(cardColour), name(name), points(points){};
+    
+    int getColour () {
+        return colour;
+    }
+    
+    int getPoints () {
+        return points;
+    }
+    
+    std::string getName () {
+        return name;
+    }
+    
 private:
     int colour;
+    std::string name;
     int points;
 };
 #endif /* BaseCard_hpp */
