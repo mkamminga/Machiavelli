@@ -23,12 +23,27 @@ public:
         characters[3] = PREACHER;
         characters[4] = MERCHANT;
         characters[5] = MASTER_BUILER;
-        characters[7] = CONDOTTIERI;
+        characters[6] = CONDOTTIERI;
+    }
+    
+    int getCurrentCharacter() {
+        return currentCharacter;
+    }
+    
+    int getNextCharacher() {
+        if (currentCharacter < 6){
+            return ++currentCharacter;
+        }
         
-    };
+        currentCharacter = -1;
+        
+        return currentCharacter;
+    }
+    
 private:
     std::shared_ptr<Game> game;
     int characters[7];
+    int currentCharacter = -1;
 };
 
 #endif /* Round_hpp */

@@ -30,6 +30,10 @@ public:
     const std::string getname () { return name; }
     const int getType () { return type; }
     void setPlayer(std::shared_ptr<Player> player);
+    std::shared_ptr<Player> getPlayer () {
+        return player;
+    }
+    
     
 private:
     int type;

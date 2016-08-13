@@ -13,7 +13,7 @@
 #include "MainProcessor.hpp"
 
 class MurdererProcessor : public MainProcessor {
-public:
+protected:
     virtual void handleSpecialFeature();
 };
 

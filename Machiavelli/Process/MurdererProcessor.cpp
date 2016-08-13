@@ -9,7 +9,5 @@
 #include "MurdererProcessor.hpp"
 #include <string>
 
-void MurdererProcessor::handleSpecialFeature() {
-    auto a = "";
-    
-}
+
+void MurdererProcessor::handleSpecialFeature() {}

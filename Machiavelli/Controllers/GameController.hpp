@@ -45,12 +45,15 @@ private:
     void setupCards();
     void setupCharacters();
     void setupProcessors();
-    std::shared_ptr<BaseCharacter> removeChoseCharacter(const std::string& question, std::shared_ptr<Socket> client, std::vector<std::shared_ptr<BaseCharacter>>& characters);
+    void resetPlayerCharacters();
+    void devideCardsToPlayers(std::vector<std::shared_ptr<BaseCharacter>>& characters);
+    std::shared_ptr<BaseCharacter> removeAndChoseCharacter(const std::string& question, std::shared_ptr<Socket> client, std::vector<std::shared_ptr<BaseCharacter>>& characters);
     
     std::shared_ptr<Game> game = nullptr;
     std::map<int, std::unique_ptr<MainProcessor>> processors;
     std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>> players;
     std::vector<std::shared_ptr<BaseCharacter>> characters;
+    std::shared_ptr<Round> currentRound = nullptr;
     bool gameOver = false;
     bool gameStarted = false;
     

@@ -11,9 +11,28 @@
 
 #include <stdio.h>
 
+#include "../Models/Round.hpp"
+#include "../Socket.h"
+#include "Player.hpp"
+
 class MainProcessor {
+public:
+    MainProcessor () {
+        allowedCommands.push_back("r");
+        allowedCommands.push_back("s");
+        allowedCommands.push_back("b");
+    }
+    virtual void handle(std::shared_ptr<Round> round, std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>> &players, std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>& playerClient);
+private:
+    
 protected:
-    virtual void handleSpecialFeature() {};
+    virtual void handleSpecialFeature()  = 0;
+    void askMainQuestion(std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>> &players, std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>& playerClient);
+    void handleIncomePhase();
+    void handlePickCardPhase();
+    void handleBuildPhase();
+    
+    std::vector<std::string> allowedCommands;
 };
 
 #endif /* MainProcessor_hpp */
