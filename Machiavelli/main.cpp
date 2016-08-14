@@ -16,8 +16,7 @@
 using namespace std;
 
 #include "Socket.h"
-#include "Sync_queue.h"
-#include "ClientCommand.h"
+#include "Views/ConsoleView.hpp"
 #include "Player.hpp"
 #include "Controllers/GameController.hpp"
 
@@ -28,7 +27,7 @@ namespace machiavelli {
 
 
 
-void handle_client(shared_ptr<Socket> client, GameController* gameController) // this function runs in a separate thread
+void handle_client(shared_ptr<ConsoleView> client, GameController* gameController) // this function runs in a separate thread
 {
     try {
         client->write("Welcome to Server 1.0! To quit, type 'quit'.\r\n");
@@ -40,6 +39,10 @@ void handle_client(shared_ptr<Socket> client, GameController* gameController) //
         
         gameController->addPlayer(player, client);
         
+        client->addHandler("quit", [gameController] () {
+            gameController->quit();
+        });
+        
         if (gameController->canStart()) {
             client->write("You have been proclaimed king!.\r\n");
             gameController->start();
@@ -48,10 +51,8 @@ void handle_client(shared_ptr<Socket> client, GameController* gameController) //
                 try {
                     //Round start, 
                     gameController->startRound();
-                    // ->
-                    // 2. Character handle
-                    // <-
                     gameController->callCharcaters();
+                    
                     cerr << '[' << client->get_dotted_ip() << " (" << client->get_socket() << ") " << player->get_name() << "] "  << '\n';
                     
                 } catch (const exception& ex) {
@@ -66,6 +67,8 @@ void handle_client(shared_ptr<Socket> client, GameController* gameController) //
                     }
                 }
             }
+            
+            client->close();
 
         } else {
             //wait for all players
@@ -88,12 +91,12 @@ int main(int argc, const char * argv[])
     
 	while (true) {
 		try {
-			while (true) {
+			while (!gameController.hasStarted()) {
 				// wait for connection from client; will create new socket
 				cerr << "server listening" << '\n';
-				unique_ptr<Socket> client {server.accept()};
+				unique_ptr<ConsoleView> client {server.accept()};
                 
-                if (!gameController.hasStarted()){
+                if (!gameController.hasStarted() || gameController.isGameOver()){
                     // communicate with client over new socket in separate thread
                     thread handler {handle_client, move(client), &gameController};
                     handlers.push_back(move(handler));

@@ -17,6 +17,8 @@
 #include <exception>
 #include <memory>
 
+#include "Views/ConsoleView.hpp"
+
 #if defined(__APPLE__) || defined(__linux__)
 
 	#include <sys/socket.h>
@@ -229,14 +231,14 @@ ServerSocket::ServerSocket(int port)
 	throw_if_min1(::listen(sock, 100));  // the number of clients that can be queued
 }
 
-std::unique_ptr<Socket> ServerSocket::accept()
+std::unique_ptr<ConsoleView> ServerSocket::accept()
 {
 	struct sockaddr client_addr;
 	client_addr.sa_family = AF_INET;
 	socklen_t len = sizeof(client_addr);
 	SOCKET fd;
 	throw_if_min1(fd = ::accept(sock, &client_addr, &len));
-	std::unique_ptr<Socket> client {new Socket{fd, client_addr}};
+	std::unique_ptr<ConsoleView> client {new ConsoleView{fd, client_addr}};
     std::cerr << "Connection accepted from " << client->get_dotted_ip() << ", with socket " << fd << '\n';
 	return client;
 }

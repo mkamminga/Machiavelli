@@ -44,9 +44,37 @@ public:
         return cards;
     }
     
+    int takeCoins (int number) {
+        if (number <= numberOfCoins) {
+            numberOfCoins-= number;
+            
+            return number;
+        } else if (numberOfCoins > 0) {
+            int returnNumber = numberOfCoins;
+            numberOfCoins = 0;
+            
+            return returnNumber;
+        }
+        
+        return -1;
+    }
+    
+    int getCoins () {
+        return numberOfCoins;
+    }
+    
+    void putCoins (int number) {
+        numberOfCoins+= number;
+        
+        if (numberOfCoins > 30) {
+            numberOfCoins = 30;
+        }
+    }
+    
 private:
     std::vector<std::shared_ptr<BaseCard>> availibleCards;
     std::vector<std::shared_ptr<BaseCard>> laidoutCards;
+    int numberOfCoins = 30;
 };
 
 #endif /* Game_hpp */

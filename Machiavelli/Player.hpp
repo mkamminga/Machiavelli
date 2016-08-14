@@ -25,7 +25,17 @@ public:
     void add_card(std::shared_ptr<BaseCard> card) {
         cards.push_back(card);
     }
-    void add_character (std::shared_ptr<BaseCharacter> character ) { characters.push_back(character); }
+    
+    void add_cards(std::vector<std::shared_ptr<BaseCard>> gameCards) {
+        for (auto card : gameCards) {
+            cards.push_back(card);
+        }
+    }
+    
+    void add_character (std::shared_ptr<BaseCharacter> character ) {
+        characters.push_back(character);
+    }
+    
     void remove_character (std::shared_ptr<BaseCharacter> character) {
         for (auto it = characters.begin(); it != characters.end(); it++ ) {
             auto characterIt = it.operator*();
@@ -41,11 +51,43 @@ public:
     const std::vector<std::shared_ptr<BaseCharacter>>& get_characters () {
         return characters;
     }
+    
+    void putCoins (int number) {
+        coins+= number;
+    }
+    
+    void takeCoins (int number) {
+        if (number > coins) {
+            coins = 0;
+        } else {
+            coins-= number;
+        }
+    }
+    
+    int getCoins () {
+        return coins;
+    }
+    
+    const std::vector<std::shared_ptr<BaseCard>>& getCards () {
+        return cards;
+    }
+    
+    void build (std::shared_ptr<BaseCard> card) {
+        auto position = std::find(cards.begin(), cards.end(), card);
+        
+        if (position != cards.end()) {
+            coins-= card->getPoints();
+            cards.erase(position);
+            builtCards.push_back(card);
+        }
+    }
 	
 private:
 	std::string name;
     std::vector<std::shared_ptr<BaseCard>> cards;
+    std::vector<std::shared_ptr<BaseCard>> builtCards;
     std::vector<std::shared_ptr<BaseCharacter>> characters;
+    int coins = 0;
 };
 
 #endif /* Player_hpp */

@@ -15,9 +15,7 @@
 #include <mutex>              // std::mutex, std::unique_lock
 #include <condition_variable> // std::condition_variable
 
-#include "../Socket.h"
-#include "../Sync_queue.h"
-#include "../ClientCommand.h"
+#include "../Views/ConsoleView.hpp"
 
 #include "../Process/MainProcessor.hpp"
 #include "../Player.hpp"
@@ -32,7 +30,7 @@ public:
     ~GameController(){
         quit();
     }
-    void addPlayer(std::shared_ptr<Player> player, std::shared_ptr<Socket> client);
+    void addPlayer(std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client);
     bool start();
     bool isGameOver();
     bool hasStarted();
@@ -51,7 +49,7 @@ private:
     
     std::shared_ptr<Game> game = nullptr;
     std::map<int, std::unique_ptr<MainProcessor>> processors;
-    std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>> players;
+    std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> players;
     std::vector<std::shared_ptr<BaseCharacter>> characters;
     std::shared_ptr<Round> currentRound = nullptr;
     bool gameOver = false;

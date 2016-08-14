@@ -16,7 +16,7 @@
 
 class Round {
 public:
-    Round(std::shared_ptr<Game> game) : game(game) {
+    Round(std::shared_ptr<Game> game, std::vector<std::shared_ptr<BaseCharacter>> roundCharacters) : game(game), roundCharacters(roundCharacters) {
         characters[0] = MURDERER;
         characters[1] = THIEF;
         characters[2] = WIZZARD;
@@ -40,6 +40,18 @@ public:
         return currentCharacter;
     }
     
+    std::shared_ptr<BaseCharacter> getCharacterByType (int num) {
+        auto pos = std::find_if(roundCharacters.begin(), roundCharacters.end(), [num] (const std::shared_ptr<BaseCharacter> c) {
+            return c->getType() == num;
+        });
+        
+        if (pos != roundCharacters.end()) {
+            return pos.operator*();
+        }
+        
+        return nullptr;
+    }
+    
     std::shared_ptr<Game> getGame () {
         return game;
     }
@@ -48,6 +60,7 @@ private:
     std::shared_ptr<Game> game;
     int characters[7];
     int currentCharacter = -1;
+    std::vector<std::shared_ptr<BaseCharacter>> roundCharacters;
 };
 
 #endif /* Round_hpp */

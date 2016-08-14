@@ -15,7 +15,7 @@
 #include "../Process/MerchantProcessor.hpp"
 #include "../Process/BuildmasterProcessor.hpp"
 #include "../Process/CondottieriProcessor.hpp"
-#include "../ClientCommand.h"
+
 
 GameController::GameController() {
     game = std::shared_ptr<Game>(new Game);
@@ -24,14 +24,34 @@ GameController::GameController() {
     setupProcessors();
 };
 
-void GameController::addPlayer(std::shared_ptr<Player> player, std::shared_ptr<Socket> client){
+void GameController::addPlayer(std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client){
     if (!hasStarted()){
         players.push_back(make_pair(player, client));
+        
     }
 }
 
 bool GameController::start(){
     if (!gameStarted){
+        
+        for (auto playerClient : players) {
+            auto player = playerClient.first;
+            auto client = playerClient.second;
+            
+            player->putCoins(game->takeCoins(2));
+            player->add_cards(game->takeCards(2));
+            
+            client->addHandler("show cards", [player, client]() {
+                auto cards = player->getCards();
+                client->write("Cards: \n");
+                for (auto card : cards) {
+                    client->write(" > "+ card->getName() + " - "+ std::to_string(card->getPoints()));
+                }
+                client->write("\n");
+            });
+            
+        }
+        
         gameOver = false;
         gameStarted = true;
         
@@ -70,12 +90,12 @@ void GameController::setupCharacters() {
 
 void GameController::setupProcessors() {
     processors[MURDERER]            = std::unique_ptr<MainProcessor>(new MurdererProcessor);
-    /*processors[THIEF]               = std::unique_ptr<MainProcessor>(new ThiefProcessor);
+    processors[THIEF]               = std::unique_ptr<MainProcessor>(new ThiefProcessor);
     processors[WIZZARD]             = std::unique_ptr<MainProcessor>(new WizzardProcessor);
     processors[PREACHER]            = std::unique_ptr<MainProcessor>(new PreacherProcessor);
     processors[MERCHANT]            = std::unique_ptr<MainProcessor>(new MerchantProcessor);
     processors[MASTER_BUILER]       = std::unique_ptr<MainProcessor>(new BuildmasterProcessor);
-    processors[CONDOTTIERI]         = std::unique_ptr<MainProcessor>(new CondottieriProcessor);*/
+    processors[CONDOTTIERI]         = std::unique_ptr<MainProcessor>(new CondottieriProcessor);
 }
 
 bool GameController::hasStarted() {
@@ -87,6 +107,7 @@ bool GameController::canStart() {
 }
 
 void GameController::startRound(){
+    currentRound = std::shared_ptr<Round>(new Round(game, characters));
     //copy characters
     auto roundCharacters = characters;
     std::random_shuffle ( roundCharacters.begin(), roundCharacters.end() );
@@ -95,7 +116,7 @@ void GameController::startRound(){
     //present cards of which in two turn both players can choose and throw away one card
     devideCardsToPlayers(roundCharacters);
     //set a new object for the new round
-    currentRound = std::shared_ptr<Round>(new Round(game));
+    
 }
 
 void GameController::resetPlayerCharacters () {
