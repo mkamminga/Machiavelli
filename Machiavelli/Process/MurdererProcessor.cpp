@@ -34,6 +34,7 @@ void MurdererProcessor::handleSpecialFeature(std::shared_ptr<Round> round, std::
             }
             
             broadcastMessage = "\n** character "+ character->getname() + " has been murdered! **\n";
+            break;
         }
     }
 }

@@ -174,9 +174,9 @@ std::shared_ptr<BaseCharacter> GameController::removeAndChoseCharacter(const std
 }
 
 void GameController::callCharcaters () {
-    int nextCharacter = 0;
+    int nextCharacter  = currentRound->getNextCharacher();
     while(nextCharacter >= 0){
-        nextCharacter = currentRound->getNextCharacher();
+        
         auto characterPosition = std::find_if(characters.begin(), characters.end(), [&nextCharacter](const std::shared_ptr<BaseCharacter> c) {
             return c->getType() == nextCharacter;
         });
@@ -204,6 +204,8 @@ void GameController::callCharcaters () {
             
             processors[nextCharacter]->handle(currentRound, players, playerClient.operator*());
         }
+        
+        nextCharacter = currentRound->getNextCharacher();
     }
 }
 

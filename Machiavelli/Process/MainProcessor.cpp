@@ -61,6 +61,7 @@ void MainProcessor::askMainQuestion (std::shared_ptr<Round> round, std::vector<s
             options.erase("build");
         } else if (cmd == "use special") {
             //Use special feature
+            handleSpecialFeature(round, player, client, message);
             options.erase("use special");
         }else if (cmd == "pass") {
             break;
