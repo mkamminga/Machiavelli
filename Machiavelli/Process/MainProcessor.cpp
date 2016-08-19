@@ -12,7 +12,7 @@
 
 void MainProcessor::handle(std::shared_ptr<Round> round,std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView> > > &players, std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>& playerClient){
     //ask, Would you like to receive to coins or two cards?
-    broadcastToPlayers(players, "Waiting for player: "+ playerClient.first->get_name() + "!\n");
+    roundView.broadcastToPlayers(players, "Waiting for player: "+ playerClient.first->get_name() + "!\n");
     //Ask main question, would you like to pick cards or take money
     askMainQuestion(round, players, playerClient);
 }
@@ -67,13 +67,7 @@ void MainProcessor::askMainQuestion (std::shared_ptr<Round> round, std::vector<s
             break;
         }
         
-        broadcastToPlayers(players, message + "\n");
-    }
-}
-
-void MainProcessor::broadcastToPlayers(std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players, const std::string& message){
-    for (auto otherPlayerClient : players) {
-        otherPlayerClient.second->write(message);
+        roundView.broadcastToPlayers(players, message + "\n");
     }
 }
 
@@ -86,55 +80,35 @@ void MainProcessor::handleIncomePhase(std::shared_ptr<Round> round, std::shared_
 
 void MainProcessor::handlePickCardPhase(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string &broadcastMessage) {
     std::vector<std::shared_ptr<BaseCard>> cards = round->getGame()->takeCards(2);
-    std::string::size_type sz;
     
     while (cards.size() > 1) {
-        int i = 0;
-        for (auto card : cards) {
-            client->write("["+ std::to_string(i) +"] = "+ card->getName() +  " has " + std::to_string(card->getPoints()) + " points\n");
-            i++;
-        }
+        int chosenCard = roundView.displayCardsAndAskCard(client, cards);
+        auto card = cards.at(chosenCard);
+        cards.erase(cards.begin() + chosenCard);
         
-        std::string cardToAdd = client->readline();
-        int chosenCard = std::stoi (cardToAdd,&sz);
-        if (chosenCard >= 0 && chosenCard < cards.size()) {
-            auto card = cards.at(chosenCard);
-            cards.erase(cards.begin() + chosenCard);
-            player->add_card(card);
-            round->getGame()->addToLaidout(cards.front());
-            
-            broadcastMessage = "Card "+ cards.front()->getName() + " with "+ std::to_string(cards.front()->getPoints()) + " points\n";
-            
-        }
+        player->add_card(card);
+        round->getGame()->addToLaidout(cards.front());
+
+        broadcastMessage = "Card "+ cards.front()->getName() + " with "+ std::to_string(cards.front()->getPoints()) + " points\n";
     }
 }
 
 void MainProcessor::handleBuildPhase(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string &broadcastMessage) {
     auto cards = player->getCards();
     bool hasBuilt = false;
-    std::string::size_type sz;
     
     while (!hasBuilt) {
-        int i = 0;
-        for (auto card : cards) {
-            client->write("["+ std::to_string(i) +"] = "+ card->getName() +  " has " + std::to_string(card->getPoints()) + " points\n");
-            i++;
-        }
+        int chosenCard = roundView.displayCardsAndAskCard(client, cards);
+        auto card = cards.at(chosenCard);
+            
+        if (card->getPoints() <= player->getCoins()) {
+            player->build(card);
+            round->getGame()->addToLaidout(card);
         
-        std::string cardToAdd = client->readline();
-        int chosenCard = std::stoi (cardToAdd,&sz);
-        
-        if (chosenCard >= 0 && chosenCard < cards.size()) {
-            
-            auto card = cards.at(chosenCard);
-            
-            if (card->getPoints() <= player->getCoins()) {
-                player->build(card);
-                round->getGame()->addToLaidout(card);
-            
-                broadcastMessage = "Card "+ card->getName() + " with "+ std::to_string(card->getPoints()) + " laid out\n";
-                hasBuilt = true;
-            }
+            broadcastMessage = "Card "+ card->getName() + " with "+ std::to_string(card->getPoints()) + " laid out\n";
+            hasBuilt = true;
+        } else {
+            break;
         }
     }
 }
