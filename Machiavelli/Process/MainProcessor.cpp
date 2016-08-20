@@ -14,10 +14,10 @@ void MainProcessor::handle(std::shared_ptr<Round> round,std::vector<std::pair<st
     //ask, Would you like to receive to coins or two cards?
     roundView.broadcastToPlayers(players, "Waiting for player: "+ playerClient.first->get_name() + "!\n");
     //Ask main question, would you like to pick cards or take money
-    askMainQuestion(round, players, playerClient);
+    askMainQuestion(round, playerClient);
 }
 
-void MainProcessor::askMainQuestion (std::shared_ptr<Round> round, std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players, std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>& playerClient) {
+void MainProcessor::askMainQuestion (std::shared_ptr<Round> round, std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>& playerClient) {
     
     auto client = playerClient.second;
     auto player = playerClient.first;
@@ -65,6 +65,8 @@ void MainProcessor::askMainQuestion (std::shared_ptr<Round> round, std::vector<s
             options.erase("use special");
         }else if (cmd == "pass") {
             break;
+        } else {
+            client->write("uhm, not sure what you mean...\n>>");
         }
         
         roundView.broadcastToPlayers(players, message + "\n");

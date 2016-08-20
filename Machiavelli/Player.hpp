@@ -48,6 +48,18 @@ public:
         }
     }
     
+    void removeCard (std::shared_ptr<BaseCard> card) {
+        cards.erase(std::remove_if(
+            cards.begin(),
+            cards.end(),
+            [card] (std::shared_ptr<BaseCard> b){
+              return b == card;
+            }),
+            cards.end()
+        );
+
+    }
+    
     const std::vector<std::shared_ptr<BaseCharacter>>& get_characters () {
         return characters;
     }
@@ -81,7 +93,17 @@ public:
             builtCards.push_back(card);
         }
     }
-	
+    
+    void exchangeCardsWith(std::shared_ptr<Player> player){
+        auto cards = player->cards;
+        player->cards = cards;
+        this->cards = cards;
+    }
+    
+    int getNumberOfCards () {
+        return (int)cards.size();
+    }
+    
 private:
 	std::string name;
     std::vector<std::shared_ptr<BaseCard>> cards;

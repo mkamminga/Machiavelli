@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <vector>
 #include "BaseCard.hpp"
+#include "Player.hpp"
 
 class Game {
 public:
@@ -69,6 +70,27 @@ public:
         if (numberOfCoins > 30) {
             numberOfCoins = 30;
         }
+    }
+    
+    int numberOfLaidOutCards () {
+        return (int)laidoutCards.size();
+    }
+    
+    const std::vector<std::shared_ptr<BaseCard>>& laidOutCards (){
+        return laidoutCards;
+    }
+    
+    void exchangeCardFromLaidOut (std::shared_ptr<BaseCard> cardFromPlayer, std::shared_ptr<BaseCard> laidOutCard, std::shared_ptr<Player> player) {
+        laidoutCards.push_back(cardFromPlayer);
+        
+        laidoutCards.erase(std::remove_if(
+            laidoutCards.begin(),
+            laidoutCards.end(),
+            [laidOutCard] (std::shared_ptr<BaseCard> b){
+                return b == laidOutCard;
+            }),
+            laidoutCards.end()
+        );
     }
     
 private:

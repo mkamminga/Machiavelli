@@ -46,14 +46,48 @@ int RoundView::displayCharactersAndAskCharacter(std::shared_ptr<ConsoleView> con
     return askInputBetweenRange(consoleView, startFrom, (int)(characters.size() - 1));
 }
 
-void RoundView::broadcastToPlayers(std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players, const std::string& message) {
+void RoundView::broadcastToPlayers(const std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players, const std::string& message) {
     for (auto otherPlayerClient : players) {
         otherPlayerClient.second->write(message);
     }
 }
 
-void displayOptionsAndHandleChoice(std::shared_ptr<ConsoleView> consoleView, const std::map<std::string, std::function<void ()>>& options) {
+void RoundView::displayOptionsAndHandleChoice(std::shared_ptr<ConsoleView> consoleView, const std::map<std::string, std::string>& options, const std::map<std::string, std::function<void ()>>& binds) {
     
+    while (true) {
+        for (auto option : options) {
+            consoleView->write(option.first + " -> "+ option.second + "\n");
+        }
+        
+        consoleView->write("\n>> ");
+        std::string const option = consoleView->readline();
+        
+        if (options.find(option) != options.end()) {
+            auto pos = binds.find(option);
+            if (pos != binds.end()) {
+                auto callback = pos.operator*().second;
+                
+                callback();
+                break;
+            }
+        } else {
+            consoleView->write("uhm, not sure what you mean...\n>> ");
+        }
+    }
+}
+
+int RoundView::displayPlayersAndAskPlayer(std::shared_ptr<ConsoleView> consoleView, const std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players) {
+    
+    consoleView->write("Players.\n");
+    int i = 0;
+    for (auto playerClient : players) {
+        auto player = playerClient.first;
+        consoleView->write("["+ std::to_string(i++) +"] => "+ player->get_name() + "\n");
+    }
+    
+    consoleView->write("\n>> ");
+    
+    return askInputBetweenRange(consoleView, 0, (int)(players.size() - 1));
 }
 
 int RoundView::askInputBetweenRange (std::shared_ptr<ConsoleView> consoleView, int from, int till) {
