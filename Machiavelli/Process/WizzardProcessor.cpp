@@ -7,3 +7,7 @@
 //
 
 #include "WizzardProcessor.hpp"
+
+void WizzardProcessor::handleSpecialFeature(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string& broadcastMessage){
+    
+}

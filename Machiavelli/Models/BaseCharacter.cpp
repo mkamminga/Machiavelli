@@ -12,3 +12,13 @@
 void BaseCharacter::setPlayer(std::shared_ptr<Player> player){
     this->player = player;
 };
+
+void BaseCharacter::giveCoinsToPlayer(std::shared_ptr<Player> player) {
+    if (this->player) {
+        int number = this->player->getCoins();
+        if (number > 0) {
+            player->putCoins(number);
+            this->player->takeCoins(number);
+        }
+    }
+}

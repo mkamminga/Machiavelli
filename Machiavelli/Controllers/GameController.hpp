@@ -45,7 +45,7 @@ private:
     void setupProcessors();
     void resetPlayerCharacters();
     void devideCardsToPlayers(std::vector<std::shared_ptr<BaseCharacter>>& characters);
-    std::shared_ptr<BaseCharacter> removeAndChoseCharacter(const std::string& question, std::shared_ptr<Socket> client, std::vector<std::shared_ptr<BaseCharacter>>& characters);
+    std::shared_ptr<BaseCharacter> removeAndChoseCharacter(const std::string& question, std::shared_ptr<ConsoleView> client, std::vector<std::shared_ptr<BaseCharacter>>& characters);
     
     std::shared_ptr<Game> game = nullptr;
     std::map<int, std::unique_ptr<MainProcessor>> processors;
@@ -54,6 +54,7 @@ private:
     std::shared_ptr<Round> currentRound = nullptr;
     bool gameOver = false;
     bool gameStarted = false;
+    RoundView roundView;
     
 };
 

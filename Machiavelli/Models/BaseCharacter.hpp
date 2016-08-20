@@ -34,6 +34,7 @@ public:
         return player;
     }
     
+    void giveCoinsToPlayer(std::shared_ptr<Player>);
     
 private:
     int type;

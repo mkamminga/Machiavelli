@@ -136,37 +136,27 @@ void GameController::devideCardsToPlayers (std::vector<std::shared_ptr<BaseChara
         for (auto playerClient : players) {
             auto player = playerClient.first;
             auto client = playerClient.second;
-            int i = 0;
-            for (auto listCharacter : roundCharacters){
-                client->write("["+ std::to_string(i) +"] => "+ listCharacter->getname() + ".\r\n");
-                i++;
-            }
             
-            auto character = removeAndChoseCharacter("Which characater would you like to keep?\n", client, roundCharacters);
+            roundView.displayCharacaters(client, roundCharacters);
+            
+            auto character = removeAndChoseCharacter("Which characater would you like to keep?", client, roundCharacters);
             player->add_character(character);
             character->setPlayer(player);
             
             client->write("Character '"+ character->getname() +"' added!\n");
             
             if (roundCharacters.size() < 6 && roundCharacters.size() > 1){
+                roundView.displayCharacaters(client, roundCharacters);
                 character = removeAndChoseCharacter("Which charcater would you like to throw away?", client, roundCharacters);
-                client->write("Character '"+ character->getname() +"' thrown away!\n");
+                client->write("Character '"+ character->getname() +"' thrown away!\n\n");
             }
         }
     }
 }
 
-std::shared_ptr<BaseCharacter> GameController::removeAndChoseCharacter(const std::string& question, std::shared_ptr<Socket> client, std::vector<std::shared_ptr<BaseCharacter>>& characters) {
-    std::string::size_type sz;   // alias of size_t
-    int chosenCard = -1;
-    long size = characters.size();
-    //choose card to keep
-    while(chosenCard < 0 || chosenCard >= size){
-        client->write(question + "\n");
-        std::string cardToAdd       = client->readline();
-        chosenCard = std::stoi (cardToAdd,&sz);
-    }
-    
+std::shared_ptr<BaseCharacter> GameController::removeAndChoseCharacter(const std::string& question, std::shared_ptr<ConsoleView> client, std::vector<std::shared_ptr<BaseCharacter>>& characters) {
+    client->write(question + "\n");
+    int chosenCard = roundView.displayCharactersAndAskCharacter(client, characters, 0);
     auto character = characters.at(chosenCard);
     characters.erase(characters.begin() + chosenCard);
 

@@ -10,6 +10,8 @@
 #define Round_hpp
 
 #include <stdio.h>
+#include <functional>
+#include <map>
 
 #include "BaseCharacter.hpp"
 #include "Game.hpp"
@@ -32,7 +34,14 @@ public:
     
     int getNextCharacher() {
         if (currentCharacter < 6){
-            return ++currentCharacter;
+            currentCharacter++;
+            
+            if (binds.find(currentCharacter) != binds.end()) {
+                auto callback = binds[currentCharacter];
+                callback();
+            }
+            
+            return currentCharacter;
         }
         
         currentCharacter = -1;
@@ -56,11 +65,20 @@ public:
         return game;
     }
     
+    std::vector<std::shared_ptr<BaseCharacter>> const getCharacters () {
+        return roundCharacters;
+    }
+    
+    void addCallback(int type, std::function<void ()> callback){
+        binds[type] = callback;
+    }
+
 private:
     std::shared_ptr<Game> game;
     int characters[7];
     int currentCharacter = -1;
     std::vector<std::shared_ptr<BaseCharacter>> roundCharacters;
+    std::map<int, std::function<void()>> binds;
 };
 
 #endif /* Round_hpp */
