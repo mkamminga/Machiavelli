@@ -29,6 +29,7 @@ protected:
     void handleIncomePhase(std::string& broadcastMessage);
     void handlePickCardPhase(std::string& broadcastMessage);
     void handleBuildPhase(std::string& broadcastMessage);
+    int handlePointsForCardColours(int type);
     virtual void handleSpecialFeature(std::string& broadcastMessage) {}
     
     std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> players;

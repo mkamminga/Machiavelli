@@ -104,6 +104,12 @@ public:
         return (int)cards.size();
     }
     
+    int countCardsOfColour (int type) {
+        return (int)std::count_if(cards.begin(), cards.end(), [type](const std::shared_ptr<BaseCard> b){
+            return b->getColour() == type;
+        });
+    }
+    
 private:
 	std::string name;
     std::vector<std::shared_ptr<BaseCard>> cards;

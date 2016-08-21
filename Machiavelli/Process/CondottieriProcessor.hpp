@@ -14,7 +14,9 @@
 #include "MainProcessor.hpp"
 
 class CondottieriProcessor : public MainProcessor {
-    
+protected:
+    virtual void setupBinds(std::string& message);
+    virtual void handleSpecialFeature(std::string& broadcastMessage);
 };
 
 #endif /* CondottieriProcessor_hpp */

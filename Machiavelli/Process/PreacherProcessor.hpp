@@ -14,7 +14,9 @@
 #include "MainProcessor.hpp"
 
 class PreacherProcessor : public MainProcessor {
-    
+protected:
+    virtual void setupBinds(std::string& message);
+    virtual void handleSpecialFeature(std::string& broadcastMessage);
 };
 
 #endif /* PreacherProcessor_hpp */

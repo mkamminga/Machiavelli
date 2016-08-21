@@ -131,3 +131,16 @@ void MainProcessor::handleBuildPhase(std::string &broadcastMessage) {
         }
     }
 }
+
+int MainProcessor::handlePointsForCardColours(int type){
+    int numberOfCards = player->countCardsOfColour(BLUE);
+    
+    if (numberOfCards > 0) {
+        int numberRecived = round->getGame()->takeCoins(numberOfCards);
+        player->putCoins(numberRecived);
+        
+        return numberRecived;
+    }
+    
+    return 0;
+}

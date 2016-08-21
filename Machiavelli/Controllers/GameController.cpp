@@ -71,6 +71,9 @@ void GameController::setupCards() {
         game->addCard(std::shared_ptr<BaseCard>(new BaseCard(YELLOW, "Geel", 2)));
         game->addCard(std::shared_ptr<BaseCard>(new BaseCard(RED, "Rood", 7)));
         game->addCard(std::shared_ptr<BaseCard>(new BaseCard(BLUE, "Blauw", 2)));
+        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(BLUE, "Blauw", 3)));
+        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(BLUE, "Blauw", 4)));
+        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(BLUE, "Blauw", 8)));
         game->addCard(std::shared_ptr<BaseCard>(new BaseCard(RED, "Rood", 4)));
         game->addCard(std::shared_ptr<BaseCard>(new BaseCard(PURPLE, "Paars", 6)));
         game->addCard(std::shared_ptr<BaseCard>(new BaseCard(YELLOW, "Geel", 2)));

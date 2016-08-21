@@ -14,7 +14,9 @@
 #include "MainProcessor.hpp"
 
 class MerchantProcessor : public MainProcessor {
-    
+protected:
+    virtual void setupBinds(std::string& message);
+    virtual void handleSpecialFeature(std::string& broadcastMessage);
 };
 
 #endif /* MerchantProcessor_hpp */
