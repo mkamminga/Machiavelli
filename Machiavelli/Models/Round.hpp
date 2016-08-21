@@ -79,6 +79,7 @@ private:
     int currentCharacter = -1;
     std::vector<std::shared_ptr<BaseCharacter>> roundCharacters;
     std::map<int, std::function<void()>> binds;
+    
 };
 
 #endif /* Round_hpp */

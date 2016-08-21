@@ -15,9 +15,10 @@
 
 class WizzardProcessor : public MainProcessor {
 public:
-    virtual void handleSpecialFeature(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string& broadcastMessage);
-    void handleExchangeWithPlayer(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string& broadcastMessage);
-    void handleExchangeWithLaidOut(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string& broadcastMessage);
+    virtual void setupBinds(std::string& message);
+    virtual void handleSpecialFeature(std::string& broadcastMessage);
+    void handleExchangeWithPlayer(std::string& broadcastMessage);
+    void handleExchangeWithLaidOut(std::string& broadcastMessage);
 };
 
 #endif /* WizzardProcessor_hpp */

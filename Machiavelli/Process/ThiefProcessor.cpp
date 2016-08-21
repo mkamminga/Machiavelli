@@ -8,7 +8,14 @@
 
 #include "ThiefProcessor.hpp"
 
-void ThiefProcessor::handleSpecialFeature(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string& broadcastMessage) {
+void ThiefProcessor::setupBinds(std::string &message){
+    MainProcessor::setupBinds(message);
+    binds["use special"] = [this, &message]() {
+        handleSpecialFeature(message);
+    };
+}
+
+void ThiefProcessor::handleSpecialFeature(std::string& broadcastMessage) {
     
     client->write("Who would you like to steal from?\n");
     
@@ -16,7 +23,7 @@ void ThiefProcessor::handleSpecialFeature(std::shared_ptr<Round> round, std::sha
     
     auto character = round->getCharacterByType(chosenItem);
     
-    round->addCallback(chosenItem, [character, player, client]() {
+    round->addCallback(chosenItem, [this, character]() {
         int currentAmount = player->getCoins();
         character->giveCoinsToPlayer(player);
         
@@ -25,5 +32,5 @@ void ThiefProcessor::handleSpecialFeature(std::shared_ptr<Round> round, std::sha
     });
     
     broadcastMessage = "\n** thief will steal from "+ character->getname() + " **\n";
-
+    options.erase("use special");
 }

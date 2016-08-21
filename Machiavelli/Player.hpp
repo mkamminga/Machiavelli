@@ -95,9 +95,9 @@ public:
     }
     
     void exchangeCardsWith(std::shared_ptr<Player> player){
-        auto cards = player->cards;
+        auto playerCards = player->cards;
         player->cards = cards;
-        this->cards = cards;
+        this->cards = playerCards;
     }
     
     int getNumberOfCards () {

@@ -91,6 +91,9 @@ public:
             }),
             laidoutCards.end()
         );
+        
+        player->removeCard(cardFromPlayer);
+        player->add_card(laidOutCard);
     }
     
 private:

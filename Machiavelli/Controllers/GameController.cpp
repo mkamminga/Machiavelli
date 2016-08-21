@@ -137,7 +137,6 @@ void GameController::devideCardsToPlayers (std::vector<std::shared_ptr<BaseChara
             auto player = playerClient.first;
             auto client = playerClient.second;
             
-            roundView.displayCharacaters(client, roundCharacters);
             
             auto character = removeAndChoseCharacter("Which characater would you like to keep?", client, roundCharacters);
             player->add_character(character);
@@ -146,7 +145,6 @@ void GameController::devideCardsToPlayers (std::vector<std::shared_ptr<BaseChara
             client->write("Character '"+ character->getname() +"' added!\n");
             
             if (roundCharacters.size() < 6 && roundCharacters.size() > 1){
-                roundView.displayCharacaters(client, roundCharacters);
                 character = removeAndChoseCharacter("Which charcater would you like to throw away?", client, roundCharacters);
                 client->write("Character '"+ character->getname() +"' thrown away!\n\n");
             }
@@ -165,34 +163,27 @@ std::shared_ptr<BaseCharacter> GameController::removeAndChoseCharacter(const std
 
 void GameController::callCharcaters () {
     int nextCharacter  = currentRound->getNextCharacher();
+    //call every character untill all have been called
     while(nextCharacter >= 0){
         
-        auto characterPosition = std::find_if(characters.begin(), characters.end(), [&nextCharacter](const std::shared_ptr<BaseCharacter> c) {
-            return c->getType() == nextCharacter;
-        });
-        
-        auto character = characterPosition.operator*();
-        
+        auto character = currentRound->getCharacterByType(nextCharacter);
         std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>> position;
-        for (auto playerClient : players) {
-            auto player = playerClient.first;
-            auto client = playerClient.second;
-            
-            client->write("King is calling character: " + character->getname() + "\n");
-        }
+        roundView.broadcastToPlayers(players, "King is calling character: " + character->getname() + "\n");
+        
         auto player = character->getPlayer();
+        //if the current charcater has a
         if (player) {
+            //find the player client pair connected to the player
             auto playerClient = std::find_if(players.begin(), players.end(), [player] (const std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>& it) {
                 return it.first == player;
-            
             });
-            
-            std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>> otherPlayers;
+            //set the other players poule
+            std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> otherPlayers;
             std::copy_if(players.begin(), players.end(), back_inserter(otherPlayers), [player] (std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>> it) {
-                return it.first == player;
+                return it.first != player;
             });
-            
-            processors[nextCharacter]->handle(currentRound, players, playerClient.operator*());
+            //process the character by the specialised processor
+            processors[nextCharacter]->handle(currentRound, otherPlayers, playerClient.operator*());
         }
         
         nextCharacter = currentRound->getNextCharacher();
@@ -201,6 +192,7 @@ void GameController::callCharcaters () {
 
 
 void GameController::quit () {
+    roundView.broadcastToPlayers(players, "Shutting down now");
     for (auto clientPlayer : players){
         auto client = clientPlayer.second;
         if (client->is_open()) client->close();

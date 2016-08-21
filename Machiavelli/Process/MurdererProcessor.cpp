@@ -9,8 +9,14 @@
 #include "MurdererProcessor.hpp"
 #include <string>
 
+void MurdererProcessor::setupBinds(std::string &message){
+    MainProcessor::setupBinds(message);
+    binds["use special"] = [this, &message]() {
+        handleSpecialFeature(message);
+    };
+}
 
-void MurdererProcessor::handleSpecialFeature(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string& broadcastMessage) {
+void MurdererProcessor::handleSpecialFeature(std::string& broadcastMessage) {
     
     client->write("Who would you like to murder?\n");
 
@@ -23,4 +29,5 @@ void MurdererProcessor::handleSpecialFeature(std::shared_ptr<Round> round, std::
     }
     
     broadcastMessage = "\n** character "+ character->getname() + " has been murdered! **\n";
+    options.erase("use special");
 }

@@ -24,14 +24,20 @@ private:
     
 protected:
     //virtual void handleSpecialFeature()  = 0;
-    void askMainQuestion(std::shared_ptr<Round> round, std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>& playerClient);
-    void handleIncomePhase(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string& broadcastMessage);
-    void handlePickCardPhase(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string& broadcastMessage);
-    void handleBuildPhase(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string& broadcastMessage);
-    virtual void handleSpecialFeature(std::shared_ptr<Round> round, std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client, std::string& broadcastMessage) {}
+    void askMainQuestion(std::string& message);
+    virtual void setupBinds(std::string& message);
+    void handleIncomePhase(std::string& broadcastMessage);
+    void handlePickCardPhase(std::string& broadcastMessage);
+    void handleBuildPhase(std::string& broadcastMessage);
+    virtual void handleSpecialFeature(std::string& broadcastMessage) {}
     
     std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> players;
     RoundView roundView;
+    std::map<std::string, std::string> options;
+    std::map<std::string, std::function<void()>> binds;
+    std::shared_ptr<Round> round = nullptr;
+    std::shared_ptr<Player> player = nullptr;
+    std::shared_ptr<ConsoleView> client = nullptr;
 };
 
 #endif /* MainProcessor_hpp */
