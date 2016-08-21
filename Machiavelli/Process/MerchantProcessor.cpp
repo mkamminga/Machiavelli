@@ -15,6 +15,13 @@ void MerchantProcessor::setupBinds(std::string &message){
     };
 }
 
+void MerchantProcessor::askMainQuestion(std::string& message) {
+    int num = round->getGame()->takeCoins(1);
+    client->write("You have recived coins" + std::to_string(num)+ "\n");
+    roundView.broadcastToPlayers(players, "Player "+ player->get_name() + " has received "+ std::to_string(num) + " coins.\n" );
+    MainProcessor::askMainQuestion(message);
+}
+
 void MerchantProcessor::handleSpecialFeature(std::string &broadcastMessage) {
     int numberRecived = handlePointsForCardColours(GREEN);
     

@@ -115,3 +115,16 @@ int RoundView::askInputBetweenRange (std::shared_ptr<ConsoleView> consoleView, i
 
     return chosenInput;
 }
+
+bool RoundView::willContinue(std::shared_ptr<ConsoleView> consoleView) {
+    consoleView->write("Would you like to continue? (y/n)\n\n>> ");
+    while (true) {
+        std::string yn = consoleView->readline();
+    
+        if (yn == "y" || yn == "n") {
+            return yn == "y";
+        } else {
+            consoleView->write("not quite sure what you mean... Please try again..\n\n>> ");
+        }
+    }
+}

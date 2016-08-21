@@ -73,7 +73,7 @@ void MainProcessor::setupBinds(std::string& message) {
 void MainProcessor::askMainQuestion (std::string& message) {
     
     while (options.size() > 0 && !(options.size() == 1 && options.find("pass") != options.end())){
-        client->write("\nWould you like to do?\n\n");
+        client->write("\nWhat would you like to do?\n\n");
         message = "";
         roundView.displayOptionsAndHandleChoice(client, options, binds);
         if (message.size() > 0){
@@ -94,6 +94,7 @@ void MainProcessor::handleIncomePhase(std::string &broadcastMessage) {
 
 void MainProcessor::handlePickCardPhase(std::string &broadcastMessage) {
     std::vector<std::shared_ptr<BaseCard>> cards = round->getGame()->takeCards(2);
+
     
     while (cards.size() > 1) {
         int chosenCard = roundView.displayCardsAndAskCard(client, cards);
@@ -112,9 +113,10 @@ void MainProcessor::handlePickCardPhase(std::string &broadcastMessage) {
 
 void MainProcessor::handleBuildPhase(std::string &broadcastMessage) {
     auto cards = player->getCards();
-    bool hasBuilt = false;
+    auto character = round->getCharacterByType(round->getCurrentCharacter());
+    int numberCanBuild = character->allowedCardsToBuild();
     
-    while (!hasBuilt) {
+    while (numberCanBuild > 0) {
         int chosenCard = roundView.displayCardsAndAskCard(client, cards);
         auto card = cards.at(chosenCard);
             
@@ -123,13 +125,19 @@ void MainProcessor::handleBuildPhase(std::string &broadcastMessage) {
             round->getGame()->addToLaidout(card);
         
             broadcastMessage = "Card "+ card->getName() + " with "+ std::to_string(card->getPoints()) + " laid out\n";
-            hasBuilt = true;
-            options.erase("build");
+            numberCanBuild--;
+            
         } else {
-            client->write("Cannot do so...\n\n");
-            break;
+            client->write("Cannot do so...\n\nContinue: y/n?\n>> ");
+            std::string tryAgain = client->readline();
+            
+            if (tryAgain != "y") {
+                break;
+            }
         }
     }
+    
+    options.erase("build");
 }
 
 int MainProcessor::handlePointsForCardColours(int type){

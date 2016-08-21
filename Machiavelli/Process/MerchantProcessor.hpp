@@ -16,6 +16,7 @@
 class MerchantProcessor : public MainProcessor {
 protected:
     virtual void setupBinds(std::string& message);
+    virtual void askMainQuestion(std::string& message);
     virtual void handleSpecialFeature(std::string& broadcastMessage);
 };
 

@@ -8,6 +8,8 @@
 #include <algorithm>    // std::copy_if, std::distance
 #include "GameController.hpp"
 #include "../Models/BaseCharacter.hpp"
+#include "../Models/PreacherCharacter.hpp"
+#include "../Models/BuildMasterCharacter.cpp"
 #include "../Process/MurdererProcessor.hpp"
 #include "../Process/ThiefProcessor.hpp"
 #include "../Process/WizzardProcessor.hpp"
@@ -85,9 +87,9 @@ void GameController::setupCharacters() {
     characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(MURDERER, "Murderer")));
     characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(THIEF, "Thief")));
     characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(WIZZARD, "Wizzard")));
-    characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(PREACHER, "Preacher")));
+    characters.push_back(std::shared_ptr<BaseCharacter>(new PreacherCharacter(PREACHER, "Preacher")));
     characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(MERCHANT, "Merchant")));
-    characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(MASTER_BUILER, "Master builder")));
+    characters.push_back(std::shared_ptr<BaseCharacter>(new BuildMasterCharacter(MASTER_BUILER, "Master builder")));
     characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(CONDOTTIERI, "Condottieri")));
 }
 

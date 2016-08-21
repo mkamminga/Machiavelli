@@ -81,6 +81,8 @@
 		9E5E07AE1D4CE1D6006D5063 /* ConsoleView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ConsoleView.hpp; path = Views/ConsoleView.hpp; sourceTree = "<group>"; };
 		9E5E07B01D4E3EC4006D5063 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameController.cpp; path = Controllers/GameController.cpp; sourceTree = "<group>"; };
 		9E5E07B11D4E3EC4006D5063 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameController.hpp; path = Controllers/GameController.hpp; sourceTree = "<group>"; };
+		9EC2E8821D6A19CF001F076E /* BuildMasterCharacter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = BuildMasterCharacter.hpp; path = Models/BuildMasterCharacter.hpp; sourceTree = "<group>"; };
+		9EC2E8851D6A1B9D001F076E /* PreacherCharacter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PreacherCharacter.hpp; path = Models/PreacherCharacter.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,8 @@
 				9E5E078A1D4CD33A006D5063 /* BaseCharacter.hpp */,
 				9E5E078C1D4CD354006D5063 /* BaseCard.cpp */,
 				9E5E078D1D4CD354006D5063 /* BaseCard.hpp */,
+				9EC2E8821D6A19CF001F076E /* BuildMasterCharacter.hpp */,
+				9EC2E8851D6A1B9D001F076E /* PreacherCharacter.hpp */,
 			);
 			name = Models;
 			sourceTree = "<group>";

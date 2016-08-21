@@ -34,12 +34,43 @@ public:
         return player;
     }
     
+    bool wilProtect () {
+        return protects;
+    }
+    
+    int income () {
+        return numberOfCoins;
+    }
+    
+    int allowedCardsToKeep () {
+        return numberOfAllowedCards;
+    }
+    
+    int allowedCardsToBuild () {
+        return numberOfAllowedCardsToBuild;
+    }
+    
     void giveCoinsToPlayer(std::shared_ptr<Player>);
+    
+    void setMurdered () {
+        murdered = true;
+    }
+    
+    bool isMurdered () {
+        return murdered;
+    }
     
 private:
     int type;
     std::string name;
     std::shared_ptr<Player> player = nullptr;
+    
+protected:
+    int numberOfCoins = 2;
+    int numberOfAllowedCards = 1;
+    int numberOfAllowedCardsToBuild = 1;
+    bool protects = false;
+    bool murdered = false;
 };
 
 #endif /* BaseCharacter_hpp */

@@ -14,7 +14,11 @@
 #include "MainProcessor.hpp"
 
 class BuildmasterProcessor : public MainProcessor {
-    
+protected:
+    virtual void setupBinds(std::string& message);
+    virtual void handleBuildPhase(std::string& broadcastMessage);
+    virtual void handleSpecialFeature(std::string& broadcastMessage);
+    virtual void handlePickCardPhase(std::string& broadcastMessage);
 };
 
 #endif /* BuildmasterProcessor_hpp */

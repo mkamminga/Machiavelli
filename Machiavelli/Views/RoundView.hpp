@@ -30,6 +30,7 @@ public:
     void displayOptionsAndHandleChoice(std::shared_ptr<ConsoleView> consoleView, const std::map<std::string, std::string>& availibleOptions, const std::map<std::string, std::function<void ()>>& binds);
     int displayPlayersAndAskPlayer(std::shared_ptr<ConsoleView> consoleView, const std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players);
     int askInputBetweenRange(std::shared_ptr<ConsoleView> consoleView, int from, int till);
+    bool willContinue(std::shared_ptr<ConsoleView> consoleView);
 };
 
 #endif /* RoundView_hpp */

@@ -16,6 +16,13 @@ void CondottieriProcessor::setupBinds(std::string &message){
 }
 
 void CondottieriProcessor::handleSpecialFeature(std::string &broadcastMessage) {
+    receiveCoins(broadcastMessage);
+    handleDistroyFromPlayer(broadcastMessage);
+    
+    options.erase("use special");
+}
+
+void CondottieriProcessor::receiveCoins (std::string &broadcastMessage) {
     int numberRecived = handlePointsForCardColours(RED);
     
     if (numberRecived > 0) {
@@ -23,6 +30,22 @@ void CondottieriProcessor::handleSpecialFeature(std::string &broadcastMessage) {
     } else {
         client->write("No cards of the colour red were found!");
     }
-    
-    options.erase("use special");
+}
+
+void CondottieriProcessor::handleDistroyFromPlayer(std::string& broadcastMessage){
+    while (true){
+        client->write("From which player would you like to destory:\n");
+        int playerNumber = roundView.displayPlayersAndAskPlayer(client, players);
+        auto otherPlayer = players.at(playerNumber).first;
+        auto built = otherPlayer->built();
+        if (built.size() > 0){
+            
+        } else {
+            client->write("No can do. Player has no built cards!\n");
+        }
+        
+        if (!roundView.willContinue(client)) {
+            break;
+        }
+    }
 }

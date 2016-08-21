@@ -17,6 +17,8 @@ class CondottieriProcessor : public MainProcessor {
 protected:
     virtual void setupBinds(std::string& message);
     virtual void handleSpecialFeature(std::string& broadcastMessage);
+    void receiveCoins(std::string& broadcastMessage);
+    void handleDistroyFromPlayer(std::string& broadcastMessage);
 };
 
 #endif /* CondottieriProcessor_hpp */
