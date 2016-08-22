@@ -128,3 +128,26 @@ bool RoundView::willContinue(std::shared_ptr<ConsoleView> consoleView) {
         }
     }
 }
+
+void RoundView::displayFinalPoints (const std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players, std::shared_ptr<Player> winner){
+    for (auto playerClient : players) {
+        auto client = playerClient.second;
+        auto player = playerClient.first;
+        
+        if (winner == player) {
+            client->write("You have won "+ player->get_name()+  " with "+ std::to_string(winner->calculateTotalPoints()) + " points..\n" );
+        } else {
+            client->write("Player "+ player->get_name()+  " has won with "+ std::to_string(winner->calculateTotalPoints()) + " points..\n" );
+        }
+        
+        for (auto shoutoutPlayerClient : players) {
+            if (shoutoutPlayerClient.first == player) {
+                continue;
+            }
+            
+            auto shoutoutPlayer = shoutoutPlayerClient.first;
+            
+            client->write("Player "+  shoutoutPlayer->get_name() +" has gathered "+ std::to_string(winner->calculateTotalPoints()) + " points..\n");
+        }
+    }
+}

@@ -126,6 +126,11 @@ void MainProcessor::handleBuildPhase(std::string &broadcastMessage) {
         
             broadcastMessage = "Card "+ card->getName() + " with "+ std::to_string(card->getPoints()) + " laid out\n";
             numberCanBuild--;
+            //set player has finnished first, and round.. This will trigger the game is over display setter
+            if ((cards.size() + 1) >= 8 && !player->hasFinnishedFirst() && round->isFinalRound()) {
+                player->setFinnishedFirst();
+                round->setFinalRound();
+            }
             
         } else {
             client->write("Cannot do so...\n\nContinue: y/n?\n>> ");

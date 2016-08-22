@@ -193,6 +193,11 @@ void GameController::callCharcaters () {
         
         nextCharacter = currentRound->getNextCharacher();
     }
+    
+    if (currentRound->isFinalRound()) {
+        gameOver = true;
+        gameStarted = false;
+    }
 }
 
 

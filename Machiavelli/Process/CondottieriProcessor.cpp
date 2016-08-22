@@ -17,8 +17,12 @@ void CondottieriProcessor::setupBinds(std::string &message){
 
 void CondottieriProcessor::handleSpecialFeature(std::string &broadcastMessage) {
     receiveCoins(broadcastMessage);
-    handleDistroyFromPlayer(broadcastMessage);
     
+    if (player->getCoins() > 0) {
+        handleDistroyFromPlayer(broadcastMessage);
+    } else {
+        client->write("You have not enuogh coins to destroy any laidout cards..\n");
+    }
     options.erase("use special");
 }
 
@@ -38,7 +42,23 @@ void CondottieriProcessor::handleDistroyFromPlayer(std::string& broadcastMessage
         int playerNumber = roundView.displayPlayersAndAskPlayer(client, players);
         auto otherPlayer = players.at(playerNumber).first;
         auto built = otherPlayer->built();
+        
         if (built.size() > 0){
+            
+            auto preacher = round->getCharacterByType(PREACHER);
+            if (!preacher->isMurdered() && preacher->getPlayer() != otherPlayer) {
+                int cardNumber = roundView.displayCardsAndAskCard(client, built);
+                auto card = built.at(cardNumber);
+
+                if ((card->getPoints() - 1)  <= player->getCoins()) {
+                    otherPlayer->removeCard(card);
+                    round->getGame()->addToLaidout(card);
+                } else {
+                    client->write("No can do. You cannot build card. To few pointd..\n");
+                }
+            } else {
+                client->write("Player is protected by preacher");
+            }
             
         } else {
             client->write("No can do. Player has no built cards!\n");

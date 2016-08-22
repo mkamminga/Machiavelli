@@ -72,6 +72,14 @@ public:
     void addCallback(int type, std::function<void ()> callback){
         binds[type] = callback;
     }
+    
+    bool setFinalRound () {
+        finalRound = true;
+    }
+    
+    bool isFinalRound () {
+        return finalRound;
+    }
 
 private:
     std::shared_ptr<Game> game;
@@ -79,6 +87,7 @@ private:
     int currentCharacter = -1;
     std::vector<std::shared_ptr<BaseCharacter>> roundCharacters;
     std::map<int, std::function<void()>> binds;
+    bool finalRound = false;
     
 };
 

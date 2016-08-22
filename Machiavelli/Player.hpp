@@ -114,6 +114,57 @@ public:
         return builtCards;
     }
     
+    void setFinnishedFirst () {
+        finnishedFirst = true;
+    }
+    
+    bool hasFinnishedFirst () {
+        return finnishedFirst;
+    }
+    
+    int calculateTotalPoints () {
+        int points = 0;
+        if (finnishedFirst) {
+            points+= 4;
+        } else if (builtCards.size() >= 8) {
+            points+= 2;
+        }
+        //count per type refernce
+        int pointsPerType[5]{
+            0,0,0,0,0
+        };
+        
+        for (auto card : builtCards) {
+            points += card->getPoints();
+            
+            pointsPerType[card->getColour()] += card->getPoints();
+        }
+        
+        int num = 0;
+        //run through the set types
+        for (int i = 0; i < 5; i++) {
+            if (pointsPerType[i] > 0) {
+                num++;
+            } else{
+                break;
+            }
+        }
+
+        if (num == 5) {
+            points+= 3;
+        }
+        
+        return points;
+    }
+    
+    int getPoints () {
+        int total = 0;
+        for (auto card : builtCards) {
+            total+= card->getPoints();
+        }
+        
+        return total;
+    }
     
 private:
 	std::string name;
@@ -121,6 +172,7 @@ private:
     std::vector<std::shared_ptr<BaseCard>> builtCards;
     std::vector<std::shared_ptr<BaseCharacter>> characters;
     int coins = 0;
+    bool finnishedFirst  = false;
 };
 
 #endif /* Player_hpp */
