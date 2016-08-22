@@ -20,6 +20,7 @@
 
 #include "../Utils/main.hpp"
 #include "CardsFactory.hpp"
+#include "CharacterFactory.hpp"
 
 GameController::GameController() {
     game = std::shared_ptr<Game>(new Game);
@@ -76,14 +77,8 @@ void GameController::setupCards() {
 }
 
 void GameController::setupCharacters() {
-    //TODO create and distribute characters
-    characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(MURDERER, "Murderer")));
-    characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(THIEF, "Thief")));
-    characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(WIZZARD, "Wizzard")));
-    characters.push_back(std::shared_ptr<BaseCharacter>(new PreacherCharacter(PREACHER, "Preacher")));
-    characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(MERCHANT, "Merchant")));
-    characters.push_back(std::shared_ptr<BaseCharacter>(new BuildMasterCharacter(MASTER_BUILER, "Master builder")));
-    characters.push_back(std::shared_ptr<BaseCharacter>(new BaseCharacter(CONDOTTIERI, "Condottieri")));
+    CharacterFactory characterFactory;
+    characters = characterFactory.create(devideSet(readFile(CHARACTERS_PATH), ';'));
 }
 
 void GameController::setupProcessors() {

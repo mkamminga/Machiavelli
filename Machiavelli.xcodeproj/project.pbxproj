@@ -28,6 +28,7 @@
 		9E5E07B21D4E3EC4006D5063 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07B01D4E3EC4006D5063 /* GameController.cpp */; };
 		9EC2E88B1D6B4799001F076E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC2E8891D6B4799001F076E /* main.cpp */; };
 		9EC2E88E1D6B4CF1001F076E /* CardsFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC2E88C1D6B4CF1001F076E /* CardsFactory.cpp */; };
+		9EC2E8911D6B631C001F076E /* CharacterFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC2E88F1D6B631C001F076E /* CharacterFactory.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -90,6 +91,8 @@
 		9EC2E88A1D6B4799001F076E /* main.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = main.hpp; path = Utils/main.hpp; sourceTree = "<group>"; };
 		9EC2E88C1D6B4CF1001F076E /* CardsFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardsFactory.cpp; sourceTree = "<group>"; };
 		9EC2E88D1D6B4CF1001F076E /* CardsFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CardsFactory.hpp; sourceTree = "<group>"; };
+		9EC2E88F1D6B631C001F076E /* CharacterFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CharacterFactory.cpp; path = Models/CharacterFactory.cpp; sourceTree = "<group>"; };
+		9EC2E8901D6B631C001F076E /* CharacterFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CharacterFactory.hpp; path = Models/CharacterFactory.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +159,8 @@
 				9EC2E8851D6A1B9D001F076E /* PreacherCharacter.hpp */,
 				9EC2E88C1D6B4CF1001F076E /* CardsFactory.cpp */,
 				9EC2E88D1D6B4CF1001F076E /* CardsFactory.hpp */,
+				9EC2E88F1D6B631C001F076E /* CharacterFactory.cpp */,
+				9EC2E8901D6B631C001F076E /* CharacterFactory.hpp */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -272,6 +277,7 @@
 				9E143B1D1D4A74640073B51B /* Socket.cpp in Sources */,
 				9E4CF8931D678B8B00346164 /* RoundView.cpp in Sources */,
 				9E5E078E1D4CD354006D5063 /* BaseCard.cpp in Sources */,
+				9EC2E8911D6B631C001F076E /* CharacterFactory.cpp in Sources */,
 				9E5E07961D4CD492006D5063 /* MainProcessor.cpp in Sources */,
 				9E5E078B1D4CD33A006D5063 /* BaseCharacter.cpp in Sources */,
 				9E4BFB131D53C86D006E8138 /* PreacherProcessor.cpp in Sources */,

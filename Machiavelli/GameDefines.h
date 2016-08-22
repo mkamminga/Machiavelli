@@ -12,7 +12,8 @@
 #include <string>
 
 const int GAME_BUILD_MAX = 3;
-const std::string BASE_PATH = "/Users/markjan/xcode projects/Machiavelli";
-const std::string CARDS_PATH = BASE_PATH + "/data/karakterkaarten.csv";
+const std::string BASE_PATH = "/Users/markjan/xcode projects/Machiavelli/Machiavelli/data/";
+const std::string CARDS_PATH = BASE_PATH + "bouwkaarten.csv";
+const std::string CHARACTERS_PATH = BASE_PATH + "karakterkaarten.csv";
 
 #endif /* GameDefines_h */
