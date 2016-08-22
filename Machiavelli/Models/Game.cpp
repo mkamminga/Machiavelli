@@ -7,7 +7,3 @@
 //
 
 #include "Game.hpp"
-
-void Game::addCard(std::shared_ptr<BaseCard> card){
-    availibleCards.push_back(card);
-}

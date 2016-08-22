@@ -60,6 +60,10 @@ public:
         return murdered;
     }
     
+    void reset () {
+        murdered = false;
+    }
+    
 private:
     int type;
     std::string name;

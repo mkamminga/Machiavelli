@@ -23,10 +23,7 @@ void MurdererProcessor::handleSpecialFeature(std::string& broadcastMessage) {
     int chosenItem = roundView.displayCharactersAndAskCharacter(client, round->getCharacters(), 1);
     
     auto character = round->getCharacterByType(chosenItem);
-    
-    if (character->getPlayer()){
-        character->getPlayer()->remove_character(character);
-    }
+    character->setMurdered();
     
     broadcastMessage = "\n** character "+ character->getname() + " has been murdered! **\n";
     options.erase("use special");

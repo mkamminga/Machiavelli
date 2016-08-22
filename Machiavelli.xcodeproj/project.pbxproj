@@ -26,6 +26,8 @@
 		9E5E079F1D4CDE6C006D5063 /* WizzardProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E079D1D4CDE6C006D5063 /* WizzardProcessor.cpp */; };
 		9E5E07AF1D4CE1D6006D5063 /* ConsoleView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07AD1D4CE1D6006D5063 /* ConsoleView.cpp */; };
 		9E5E07B21D4E3EC4006D5063 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E5E07B01D4E3EC4006D5063 /* GameController.cpp */; };
+		9EC2E88B1D6B4799001F076E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC2E8891D6B4799001F076E /* main.cpp */; };
+		9EC2E88E1D6B4CF1001F076E /* CardsFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9EC2E88C1D6B4CF1001F076E /* CardsFactory.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -83,6 +85,11 @@
 		9E5E07B11D4E3EC4006D5063 /* GameController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameController.hpp; path = Controllers/GameController.hpp; sourceTree = "<group>"; };
 		9EC2E8821D6A19CF001F076E /* BuildMasterCharacter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = BuildMasterCharacter.hpp; path = Models/BuildMasterCharacter.hpp; sourceTree = "<group>"; };
 		9EC2E8851D6A1B9D001F076E /* PreacherCharacter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PreacherCharacter.hpp; path = Models/PreacherCharacter.hpp; sourceTree = "<group>"; };
+		9EC2E8871D6B4541001F076E /* GameDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameDefines.h; sourceTree = "<group>"; };
+		9EC2E8891D6B4799001F076E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = Utils/main.cpp; sourceTree = "<group>"; };
+		9EC2E88A1D6B4799001F076E /* main.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = main.hpp; path = Utils/main.hpp; sourceTree = "<group>"; };
+		9EC2E88C1D6B4CF1001F076E /* CardsFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CardsFactory.cpp; sourceTree = "<group>"; };
+		9EC2E88D1D6B4CF1001F076E /* CardsFactory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CardsFactory.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +122,7 @@
 		9E143B0C1D4A73DB0073B51B /* Machiavelli */ = {
 			isa = PBXGroup;
 			children = (
+				9EC2E8881D6B4757001F076E /* Utils */,
 				9E5E07AC1D4CE16C006D5063 /* Views */,
 				9E5E07901D4CD391006D5063 /* Process */,
 				9E5E07821D4CD2BC006D5063 /* Controllers */,
@@ -128,6 +136,7 @@
 				9E143B1A1D4A74640073B51B /* throw.cpp */,
 				9E143B1B1D4A74640073B51B /* throw.h */,
 				9E143B0D1D4A73DB0073B51B /* main.cpp */,
+				9EC2E8871D6B4541001F076E /* GameDefines.h */,
 			);
 			path = Machiavelli;
 			sourceTree = "<group>";
@@ -145,6 +154,8 @@
 				9E5E078D1D4CD354006D5063 /* BaseCard.hpp */,
 				9EC2E8821D6A19CF001F076E /* BuildMasterCharacter.hpp */,
 				9EC2E8851D6A1B9D001F076E /* PreacherCharacter.hpp */,
+				9EC2E88C1D6B4CF1001F076E /* CardsFactory.cpp */,
+				9EC2E88D1D6B4CF1001F076E /* CardsFactory.hpp */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -190,6 +201,15 @@
 				9E4CF8921D678B8B00346164 /* RoundView.hpp */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		9EC2E8881D6B4757001F076E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9EC2E8891D6B4799001F076E /* main.cpp */,
+				9EC2E88A1D6B4799001F076E /* main.hpp */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +278,7 @@
 				9E5E07AF1D4CE1D6006D5063 /* ConsoleView.cpp in Sources */,
 				9E4BFB141D53C86D006E8138 /* ThiefProcessor.cpp in Sources */,
 				9E4BFB111D53C86D006E8138 /* CondottieriProcessor.cpp in Sources */,
+				9EC2E88E1D6B4CF1001F076E /* CardsFactory.cpp in Sources */,
 				9E5E079F1D4CDE6C006D5063 /* WizzardProcessor.cpp in Sources */,
 				9E4BFB121D53C86D006E8138 /* MerchantProcessor.cpp in Sources */,
 				9E4BFB101D53C86D006E8138 /* BuildmasterProcessor.cpp in Sources */,
@@ -266,6 +287,7 @@
 				9E5E07B21D4E3EC4006D5063 /* GameController.cpp in Sources */,
 				9E5E07881D4CD30F006D5063 /* Round.cpp in Sources */,
 				9E5E07991D4CD4B9006D5063 /* MurdererProcessor.cpp in Sources */,
+				9EC2E88B1D6B4799001F076E /* main.cpp in Sources */,
 				9E5E07851D4CD2F8006D5063 /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

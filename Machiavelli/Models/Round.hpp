@@ -73,7 +73,7 @@ public:
         binds[type] = callback;
     }
     
-    bool setFinalRound () {
+    void setFinalRound () {
         finalRound = true;
     }
     

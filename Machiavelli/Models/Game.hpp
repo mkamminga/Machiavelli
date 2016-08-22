@@ -9,6 +9,7 @@
 #ifndef Game_hpp
 #define Game_hpp
 
+#include "../GameDefines.h"
 #include <stdio.h>
 #include <vector>
 #include "BaseCard.hpp"
@@ -16,7 +17,9 @@
 
 class Game {
 public:
-    void addCard(std::shared_ptr<BaseCard> card);
+    void addCards(std::vector<std::shared_ptr<BaseCard>> cards){
+        this->availibleCards = cards;
+    }
     void addToLaidout(std::shared_ptr<BaseCard> card) {
         laidoutCards.push_back(card);
     }
@@ -73,7 +76,7 @@ public:
     }
     
     int numberOfLaidOutCards () {
-        return (int)laidoutCards.size();
+        return (int)(laidoutCards.size());
     }
     
     const std::vector<std::shared_ptr<BaseCard>>& laidOutCards (){

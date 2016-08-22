@@ -10,6 +10,8 @@
 #include <map>
 #include "../Models/Game.hpp"
 
+using namespace std;
+
 void MainProcessor::handle(std::shared_ptr<Round> round,std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView> > > &players, std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>& playerClient){
     this->players = players;
     this->player = playerClient.first;
@@ -127,7 +129,7 @@ void MainProcessor::handleBuildPhase(std::string &broadcastMessage) {
             broadcastMessage = "Card "+ card->getName() + " with "+ std::to_string(card->getPoints()) + " laid out\n";
             numberCanBuild--;
             //set player has finnished first, and round.. This will trigger the game is over display setter
-            if ((cards.size() + 1) >= 8 && !player->hasFinnishedFirst() && round->isFinalRound()) {
+            if ((cards.size() + 1) >= GAME_BUILD_MAX && !player->hasFinnishedFirst() && round->isFinalRound()) {
                 player->setFinnishedFirst();
                 round->setFinalRound();
             }

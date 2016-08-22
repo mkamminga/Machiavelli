@@ -9,6 +9,7 @@
 #ifndef Player_hpp
 #define Player_hpp
 
+#include "GameDefines.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -126,7 +127,7 @@ public:
         int points = 0;
         if (finnishedFirst) {
             points+= 4;
-        } else if (builtCards.size() >= 8) {
+        } else if (builtCards.size() >= GAME_BUILD_MAX) {
             points+= 2;
         }
         //count per type refernce

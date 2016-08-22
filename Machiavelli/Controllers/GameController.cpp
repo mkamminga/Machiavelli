@@ -18,6 +18,8 @@
 #include "../Process/BuildmasterProcessor.hpp"
 #include "../Process/CondottieriProcessor.hpp"
 
+#include "../Utils/main.hpp"
+#include "CardsFactory.hpp"
 
 GameController::GameController() {
     game = std::shared_ptr<Game>(new Game);
@@ -68,18 +70,9 @@ bool GameController::isGameOver() {
 }
 
 void GameController::setupCards() {
-    //TODO implement import to replace hardcoded setup
-    for (int i = 0; i < 3; i++) {
-        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(YELLOW, "Geel", 2)));
-        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(RED, "Rood", 7)));
-        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(BLUE, "Blauw", 2)));
-        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(BLUE, "Blauw", 3)));
-        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(BLUE, "Blauw", 4)));
-        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(BLUE, "Blauw", 8)));
-        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(RED, "Rood", 4)));
-        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(PURPLE, "Paars", 6)));
-        game->addCard(std::shared_ptr<BaseCard>(new BaseCard(YELLOW, "Geel", 2)));
-    }
+    CardsFactory cardsFactory;
+    auto set = cardsFactory.create(devideSet(readFile(CARDS_PATH), ';'));
+    game->addCards(set);
 }
 
 void GameController::setupCharacters() {
@@ -132,6 +125,7 @@ void GameController::resetPlayerCharacters () {
         const std::vector<std::shared_ptr<BaseCharacter>> playerCharacters = player->get_characters();
         for (auto character : playerCharacters){
             player->remove_character(character);
+            character->reset();
         }
     }
 }
@@ -176,8 +170,8 @@ void GameController::callCharcaters () {
         roundView.broadcastToPlayers(players, "King is calling character: " + character->getname() + "\n");
         
         auto player = character->getPlayer();
-        //if the current charcater has a
-        if (player) {
+        //if the current charcater has a player, and has not been murdered
+        if (player && !character->isMurdered()) {
             //find the player client pair connected to the player
             auto playerClient = std::find_if(players.begin(), players.end(), [player] (const std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>& it) {
                 return it.first == player;
@@ -197,6 +191,13 @@ void GameController::callCharcaters () {
     if (currentRound->isFinalRound()) {
         gameOver = true;
         gameStarted = false;
+        auto winner = std::find_if(players.begin(), players.end(), [](const std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>& it) {
+            return it.first->hasFinnishedFirst();
+        });
+        
+        roundView.displayFinalPoints(players, winner.operator*().first);
+    } else {
+        roundView.broadcastToPlayers(players, "\n\n** New Round **\n\n");
     }
 }
 
@@ -205,7 +206,8 @@ void GameController::quit () {
     roundView.broadcastToPlayers(players, "Shutting down now");
     for (auto clientPlayer : players){
         auto client = clientPlayer.second;
-        if (client->is_open()) client->close();
+        
+        if (client && client->is_open()) client->close();
     }
 }
 
