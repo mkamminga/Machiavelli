@@ -10,6 +10,7 @@
 #define Game_hpp
 
 #include "../GameDefines.h"
+#include <algorithm>
 #include <stdio.h>
 #include <vector>
 #include "BaseCard.hpp"
@@ -18,8 +19,10 @@
 class Game {
 public:
     void addCards(std::vector<std::shared_ptr<BaseCard>> cards){
+        std::random_shuffle ( cards.begin(), cards.end() );
         this->availibleCards = cards;
     }
+    
     void addToLaidout(std::shared_ptr<BaseCard> card) {
         laidoutCards.push_back(card);
     }

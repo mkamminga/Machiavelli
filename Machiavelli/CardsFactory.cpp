@@ -22,6 +22,14 @@ std::vector<std::shared_ptr<BaseCard>> CardsFactory::create(const std::vector<st
     types["geel"]   = YELLOW;
     types["lila"]   = PURPLE;
     
+    std::map<std::string, std::string> colourTranslations;
+    colourTranslations["groen"] = "Green";
+    colourTranslations["blauw"] = "Blue";
+    colourTranslations["rood"]  = "Red";
+    colourTranslations["geel"]  = "Yellow";
+    colourTranslations["lila"]  = "Purple";
+    
+    
     std::regex pattern ("^[0-9]+$");
     std::string::size_type sz;
     
@@ -35,7 +43,7 @@ std::vector<std::shared_ptr<BaseCard>> CardsFactory::create(const std::vector<st
                 if (std::regex_match(points, pattern)) {
                     int numberOfPoints = std::stoi (points,&sz);
                     
-                    cards.push_back(std::shared_ptr<BaseCard>( new BaseCard(types[colour], name, numberOfPoints) ));
+                    cards.push_back(std::shared_ptr<BaseCard>( new BaseCard(types[colour], colourTranslations[colour], name, numberOfPoints) ));
                 }
             }
         }

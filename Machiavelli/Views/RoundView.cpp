@@ -18,7 +18,7 @@ void RoundView::displayCharacaters(std::shared_ptr<ConsoleView> consoleView, con
         auto it = characters.begin() + i;
         for ( ; it != characters.end(); it++){
             auto listCharacter = it.operator*();
-            consoleView->write("["+ std::to_string(i) +"] => "+ listCharacter->getname() + ".\n");
+            consoleView->write("["+ std::to_string(i) +"] => "+ listCharacter->getname() + ".\n\r");
             i++;
         }
     }
@@ -27,7 +27,7 @@ void RoundView::displayCharacaters(std::shared_ptr<ConsoleView> consoleView, con
 void RoundView::displayCards(std::shared_ptr<ConsoleView> consoleView, std::vector<std::shared_ptr<BaseCard>>& cards) {
     int i = 0;
     for (auto card : cards) {
-        consoleView->write("["+ std::to_string(i) +"] = "+ card->getName() +  " has " + std::to_string(card->getPoints()) + " points\n");
+        consoleView->write("["+ std::to_string(i) +"] => "+ card->getName() +  " has " + std::to_string(card->getPoints()) + " points and is coloured:  "+ card->getColourname() +"\n\r");
         i++;
     }
 }
@@ -56,7 +56,7 @@ void RoundView::displayOptionsAndHandleChoice(std::shared_ptr<ConsoleView> conso
     
     while (true) {
         for (auto option : options) {
-            consoleView->write(option.first + " -> "+ option.second + "\n");
+            consoleView->write("[" + option.first + "] -> "+ option.second + "\n\r");
         }
         
         consoleView->write("\n>> ");
@@ -129,25 +129,21 @@ bool RoundView::willContinue(std::shared_ptr<ConsoleView> consoleView) {
     }
 }
 
-void RoundView::displayFinalPoints (const std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players, std::shared_ptr<Player> winner){
+void RoundView::displayFinalPoints (const std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players, std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>> currentPlayerClient, std::shared_ptr<Player> winner){
+    if (winner == currentPlayerClient.first) {
+        currentPlayerClient.second->write("You have won with "+ std::to_string(winner->calculateTotalPoints()) + " points..\n" );
+    } else {
+        currentPlayerClient.second->write("You have gathered "+ std::to_string(currentPlayerClient.first->calculateTotalPoints()) + " points..\n" );
+    }
+
     for (auto playerClient : players) {
         auto client = playerClient.second;
         auto player = playerClient.first;
         
         if (winner == player) {
-            client->write("You have won "+ player->get_name()+  " with "+ std::to_string(winner->calculateTotalPoints()) + " points..\n" );
+            client->write("Player "+ player->get_name()+  " has won with "+ std::to_string(player->calculateTotalPoints()) + " points..\n" );
         } else {
-            client->write("Player "+ player->get_name()+  " has won with "+ std::to_string(winner->calculateTotalPoints()) + " points..\n" );
-        }
-        
-        for (auto shoutoutPlayerClient : players) {
-            if (shoutoutPlayerClient.first == player) {
-                continue;
-            }
-            
-            auto shoutoutPlayer = shoutoutPlayerClient.first;
-            
-            client->write("Player "+  shoutoutPlayer->get_name() +" has gathered "+ std::to_string(winner->calculateTotalPoints()) + " points..\n");
+            client->write("Player "+ player->get_name()+  " has gathered "+ std::to_string(player->calculateTotalPoints()) + " points..\n" );
         }
     }
 }

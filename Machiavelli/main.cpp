@@ -68,7 +68,7 @@ void handle_client(shared_ptr<ConsoleView> client, GameController* gameControlle
                 }
             }
             
-            client->close();
+            gameController->quit();
 
         } else {
             //wait for all players

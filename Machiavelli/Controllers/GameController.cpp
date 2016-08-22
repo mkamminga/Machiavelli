@@ -32,7 +32,6 @@ GameController::GameController() {
 void GameController::addPlayer(std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client){
     if (!hasStarted()){
         players.push_back(make_pair(player, client));
-        
     }
 }
 
@@ -54,7 +53,6 @@ bool GameController::start(){
                 }
                 client->write("\n");
             });
-            
         }
         
         gameOver = false;
@@ -168,12 +166,12 @@ void GameController::callCharcaters () {
         //if the current charcater has a player, and has not been murdered
         if (player && !character->isMurdered()) {
             //find the player client pair connected to the player
-            auto playerClient = std::find_if(players.begin(), players.end(), [player] (const std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>& it) {
+            auto playerClient = std::find_if(players.begin(), players.end(), [player] (const std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>& it) {
                 return it.first == player;
             });
             //set the other players poule
             std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> otherPlayers;
-            std::copy_if(players.begin(), players.end(), back_inserter(otherPlayers), [player] (std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>> it) {
+            std::copy_if(players.begin(), players.end(), back_inserter(otherPlayers), [player] (std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>> it) {
                 return it.first != player;
             });
             //process the character by the specialised processor
@@ -185,12 +183,20 @@ void GameController::callCharcaters () {
     
     if (currentRound->isFinalRound()) {
         gameOver = true;
-        gameStarted = false;
         auto winner = std::find_if(players.begin(), players.end(), [](const std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>& it) {
             return it.first->hasFinnishedFirst();
         });
         
-        roundView.displayFinalPoints(players, winner.operator*().first);
+        auto winnerPlayer = winner.operator*().first;
+        
+        for (auto currentPlayerClient : players) {
+            std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> otherPlayers;
+            std::copy_if(players.begin(), players.end(), back_inserter(otherPlayers), [currentPlayerClient] (std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>> it) {
+                return it.first != currentPlayerClient.first;
+            });
+            
+            roundView.displayFinalPoints(otherPlayers, currentPlayerClient, winnerPlayer);
+        }
     } else {
         roundView.broadcastToPlayers(players, "\n\n** New Round **\n\n");
     }

@@ -85,6 +85,22 @@ public:
         return cards;
     }
     
+    const std::vector<std::shared_ptr<BaseCard>>& getBuiltCards () {
+        return builtCards;
+    }
+    
+    bool canBuild (std::shared_ptr<BaseCard> card) {
+        if (builtCards.size() > 0) {
+            return (std::count_if(builtCards.begin(), builtCards.end(), [card](const std::shared_ptr<BaseCard>& c){
+                return c->getPoints() == card->getPoints()
+                        && c->getColour() == card->getColour()
+                        && c->getColourname() == card->getColourname();
+            }) > 0);
+        } else {
+            return true;
+        }
+    }
+    
     void build (std::shared_ptr<BaseCard> card) {
         auto position = std::find(cards.begin(), cards.end(), card);
         

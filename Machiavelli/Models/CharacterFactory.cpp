@@ -29,7 +29,7 @@ std::vector<std::shared_ptr<BaseCharacter>> CharacterFactory::create(const std::
             if (std::regex_match(type, pattern)) {
                 int typeNumber = std::stoi (type,&sz);
                 std::replace(name.begin(), name.end(), '\r', '.');
-                if (typeNumber == 6) {
+                if (typeNumber == MASTER_BUILER) {
                     characters.push_back(std::shared_ptr<BaseCharacter>( new BuildMasterCharacter(typeNumber, name)));
                 } else {
                     characters.push_back(std::shared_ptr<BaseCharacter>( new BaseCharacter(typeNumber, name)));

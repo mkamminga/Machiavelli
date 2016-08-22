@@ -22,8 +22,6 @@ void CondottieriProcessor::setupBinds(std::string &message){
 }
 
 void CondottieriProcessor::handleSpecialFeature(std::string &broadcastMessage) {
-    receiveCoins(broadcastMessage);
-    
     if (player->getCoins() > 0) {
         while (true){
             client->write("From which player would you like to destory:\n");
@@ -64,10 +62,11 @@ void CondottieriProcessor::handleSpecialFeature(std::string &broadcastMessage) {
                 break;
             }
         }
+        
+        options.erase("use special");
     } else {
         client->write("You have not enuogh coins to destroy any laidout cards..\n");
     }
-    options.erase("use special");
 }
 
 void CondottieriProcessor::receiveCoins (std::string &broadcastMessage) {

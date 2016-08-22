@@ -27,11 +27,11 @@ void MainProcessor::handle(std::shared_ptr<Round> round,std::vector<std::pair<st
 
 void MainProcessor::setupBinds(std::string& message) {
     options.clear();
-    options["receive coins"] = "** receive 2 coins by command: receive coins";
-    options["receive cards"] = "** receive 2 cards with command: receive cards";
-    options["use special"]   = "** use special feature with command: use special";
-    options["build"]         = "** build by using command: build";
-    options["pass"]          = "** pass with command: pass";
+    options["receive coins"] = "** receive 2 coins by command";
+    options["receive cards"] = "** receive 2 cards with command";
+    options["use special"]   = "** use special feature with command";
+    options["build"]         = "** build by using command";
+    options["pass"]          = "** pass with command";
     options["view cards"]    = "??view current cards";
     options["view coins"]    = "??view number of coins";
     options["view laid out"] = "??view laid out pile";
@@ -114,41 +114,48 @@ void MainProcessor::handlePickCardPhase(std::string &broadcastMessage) {
 }
 
 void MainProcessor::handleBuildPhase(std::string &broadcastMessage) {
-    auto cards = player->getCards();
+    
     auto character = round->getCharacterByType(round->getCurrentCharacter());
     int numberCanBuild = character->allowedCardsToBuild();
     
     while (numberCanBuild > 0) {
+        auto cards = player->getCards();
         int chosenCard = roundView.displayCardsAndAskCard(client, cards);
         auto card = cards.at(chosenCard);
             
-        if (card->getPoints() <= player->getCoins()) {
+        if (card && card->getPoints() <= player->getCoins() && player->canBuild(card)) {
             player->build(card);
-            round->getGame()->addToLaidout(card);
+            
+            auto built = player->getBuiltCards();
         
             broadcastMessage = "Card "+ card->getName() + " with "+ std::to_string(card->getPoints()) + " laid out\n";
             numberCanBuild--;
             //set player has finnished first, and round.. This will trigger the game is over display setter
-            if ((cards.size() + 1) >= GAME_BUILD_MAX && !player->hasFinnishedFirst() && round->isFinalRound()) {
+            if (built.size() >= GAME_BUILD_MAX && !player->hasFinnishedFirst() && !round->isFinalRound()) {
+                broadcastMessage += "\n** Player "+ player->get_name() +" has built "+ std::to_string(GAME_BUILD_MAX) +" cards.. Game wil finnish after this round..\n\n";
+                client->write("You have built enough buidings to finnish the game..\n");
                 player->setFinnishedFirst();
                 round->setFinalRound();
             }
             
         } else {
-            client->write("Cannot do so...\n\nContinue: y/n?\n>> ");
-            std::string tryAgain = client->readline();
-            
-            if (tryAgain != "y") {
+            client->write("Cannot do so... Not enough coins or similar card has been built..\n\r");
+        }
+        
+        if (numberCanBuild > 0) {
+            if (!roundView.willContinue(client)) {
                 break;
             }
         }
     }
     
-    options.erase("build");
+    if (character->allowedCardsToBuild() != numberCanBuild) {
+        options.erase("build");
+    }
 }
 
 int MainProcessor::handlePointsForCardColours(int type){
-    int numberOfCards = player->countCardsOfColour(BLUE);
+    int numberOfCards = player->countCardsOfColour(type);
     
     if (numberOfCards > 0) {
         int numberRecived = round->getGame()->takeCoins(numberOfCards);

@@ -31,7 +31,7 @@ public:
     int displayPlayersAndAskPlayer(std::shared_ptr<ConsoleView> consoleView, const std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players);
     int askInputBetweenRange(std::shared_ptr<ConsoleView> consoleView, int from, int till);
     bool willContinue(std::shared_ptr<ConsoleView> consoleView);
-    void displayFinalPoints (const std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players, std::shared_ptr<Player> winner);
+    void displayFinalPoints (const std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> &players, std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>, std::shared_ptr<Player> winner);
 };
 
 #endif /* RoundView_hpp */
