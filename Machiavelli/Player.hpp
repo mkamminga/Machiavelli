@@ -95,7 +95,7 @@ public:
                 return c->getPoints() == card->getPoints()
                         && c->getColour() == card->getColour()
                         && c->getColourname() == card->getColourname();
-            }) > 0);
+            }) == 0);
         } else {
             return true;
         }

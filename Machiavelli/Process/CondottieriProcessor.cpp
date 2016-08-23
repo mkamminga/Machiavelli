@@ -18,6 +18,8 @@ void CondottieriProcessor::setupBinds(std::string &message){
         receiveCoins(message);
     };
     
+    
+    options["use special"] = "** with this option you can distroy another players built card.. Provided you have enough coins: (points -1)..";
     options["claim coins"] = "** claim coins";
 }
 
@@ -51,7 +53,7 @@ void CondottieriProcessor::handleSpecialFeature(std::string &broadcastMessage) {
                         client->write("No can do. You cannot build card. To few pointd..\n");
                     }
                 } else {
-                    client->write("Player is protected by preacher");
+                    client->write("** Player is protected by preacher **\n");
                 }
                 
             } else {

@@ -34,14 +34,14 @@ void RoundView::displayCards(std::shared_ptr<ConsoleView> consoleView, std::vect
 
 int RoundView::displayCardsAndAskCard(std::shared_ptr<ConsoleView> consoleView, std::vector<std::shared_ptr<BaseCard>>& cards) {
     displayCards(consoleView, cards);
-    consoleView->write("\nWhich card: \n\n>>");
+    consoleView->write("\nWhich card: \n");
 
     return askInputBetweenRange(consoleView, 0, (int)(cards.size() - 1));
 }
 
 int RoundView::displayCharactersAndAskCharacter(std::shared_ptr<ConsoleView> consoleView, const std::vector<std::shared_ptr<BaseCharacter>>& characters, int startFrom) {
     displayCharacaters(consoleView, characters, startFrom);
-    consoleView->write("\nWhich character: \n\n>>");
+    consoleView->write("\nWhich character: \n>> ");
     
     return askInputBetweenRange(consoleView, startFrom, (int)(characters.size() - 1));
 }
@@ -73,6 +73,10 @@ void RoundView::displayOptionsAndHandleChoice(std::shared_ptr<ConsoleView> conso
         } else {
             consoleView->write("uhm, not sure what you mean...\n>> ");
         }
+        
+        if (!consoleView->is_open()) {
+            throw std::runtime_error("connection has closed");
+        }
     }
 }
 
@@ -82,7 +86,7 @@ int RoundView::displayPlayersAndAskPlayer(std::shared_ptr<ConsoleView> consoleVi
     int i = 0;
     for (auto playerClient : players) {
         auto player = playerClient.first;
-        consoleView->write("["+ std::to_string(i++) +"] => "+ player->get_name() + "\n");
+        consoleView->write("["+ std::to_string(i++) +"] => "+ player->get_name() + "\n\r");
     }
     
     consoleView->write("\n>> ");
@@ -106,10 +110,14 @@ int RoundView::askInputBetweenRange (std::shared_ptr<ConsoleView> consoleView, i
             if (chosenInput >= from && chosenInput <= till) {
                 chosen = true;
             } else {
-                consoleView->write("\nInvalid input! Number must be between "+ std::to_string(from) +" and "+ std::to_string(till) +"\n>>");
+                consoleView->write("\nInvalid input! Number must be between "+ std::to_string(from) +" and "+ std::to_string(till) +"\n\r>> ");
             }
         } else {
-            consoleView->write("\nInvalid input!\n>>");
+            consoleView->write("\nInvalid input!\n\r>> ");
+        }
+        
+        if (!consoleView->is_open()) {
+            throw std::runtime_error("connection has closed");
         }
     }
 
@@ -124,6 +132,9 @@ bool RoundView::willContinue(std::shared_ptr<ConsoleView> consoleView) {
         if (yn == "y" || yn == "n") {
             return yn == "y";
         } else {
+            if (!consoleView->is_open()) {
+                throw std::runtime_error("connection has closed");
+            }
             consoleView->write("not quite sure what you mean... Please try again..\n\n>> ");
         }
     }

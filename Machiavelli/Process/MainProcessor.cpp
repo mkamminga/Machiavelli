@@ -23,18 +23,24 @@ void MainProcessor::handle(std::shared_ptr<Round> round,std::vector<std::pair<st
     setupBinds(message);
     //Ask main question, would you like to pick cards or take money
     askMainQuestion(message);
+    
+    round = nullptr;
+    client = nullptr;
+    player = nullptr;
+    players = std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView> > >{};
 }
 
 void MainProcessor::setupBinds(std::string& message) {
     options.clear();
-    options["receive coins"] = "** receive 2 coins by command";
-    options["receive cards"] = "** receive 2 cards with command";
-    options["use special"]   = "** use special feature with command";
-    options["build"]         = "** build by using command";
-    options["pass"]          = "** pass with command";
-    options["view cards"]    = "??view current cards";
-    options["view coins"]    = "??view number of coins";
-    options["view laid out"] = "??view laid out pile";
+    options["receive coins"]            = "** receive 2 coins by command";
+    options["receive cards"]            = "** receive 2 cards with command";
+    options["use special"]              = "** use special feature with command";
+    options["build"]                    = "** build by using command";
+    options["pass"]                     = "** pass with command";
+    options["view player details"]      = "?? view all the details of the other players";
+    options["view details"]             = "?? view zll your details";
+    options["view game details"]        = "?? view laid out pile";
+    
     binds.clear();
     binds["receive coins"] = [this, &message]() {
         handleIncomePhase(message);
@@ -53,22 +59,63 @@ void MainProcessor::setupBinds(std::string& message) {
     };
     
     binds["pass"] = [this, &message]() {
-        message = "Player has passed";
+        message = "** Player "+ player->get_name() +" has passed ** \n";
         options.clear();
     };
     
-    binds["view cards"] = [this, &message]() {
+    binds["view details"] = [this, &message]() {
         auto cards = player->getCards();
-        roundView.displayCards(client, cards);
+        auto built = player->getBuiltCards();
+        client->write("\nHand held cards: \n\r");
+        if (cards.size() > 0) {
+            roundView.displayCards(client, cards);
+        } else {
+            client->write("** No cards built! **\n");
+        }
+
+        client->write("-----\n\r");
+        client->write("Built cards: \n\r");
+        if (built.size() > 0) {
+            roundView.displayCards(client, built);
+        } else {
+            client->write("** No cards built! **\n");
+        }
+        client->write("-----\n\r");
+        client->write("Number of coins: "+ std::to_string(player->getCoins()) + "\n\r\n\r");
     };
-    
-    binds["view coins"] = [this, &message]() {
-        client->write("Number of coins: "+ std::to_string(player->getCoins()));
+
+    binds["view player details"] = [this, &message]() {
+        for (auto playerClient: players){
+            auto currentPlayer = playerClient.first;
+            
+            auto cards = currentPlayer->getCards();
+            auto built = currentPlayer->getBuiltCards();
+            client->write("Player: "+ currentPlayer->get_name() + " details.. \n\r");
+            client->write("-----\n\r");
+            client->write("\nHand held cards: "+ std::to_string(cards.size()) +"\n\r");
+            
+            client->write("-----\n\r");
+            client->write("Built cards: \n\r");
+            if (built.size() > 0) {
+                roundView.displayCards(client, built);
+            } else {
+                client->write("** No cards built! **\n");
+            }
+            client->write("-----\n\r");
+            client->write("Number of coins: "+ std::to_string(currentPlayer->getCoins()) + "\n\r\n\r");
+        }
     };
-    
-    binds["view laid out"] = [this, &message]() {
+
+    binds["view game details"] = [this, &message]() {
         auto cards = round->getGame()->laidOutCards();
-        roundView.displayCards(client, cards);
+        
+        if (cards.size() > 0) {
+            client->write("Built cards are!");
+            roundView.displayCards(client, cards);
+        } else {
+            client->write("** No cards built! **\n");
+        }
+        client->write("\n");
     };
 }
 

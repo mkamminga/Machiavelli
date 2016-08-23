@@ -14,6 +14,8 @@ void MurdererProcessor::setupBinds(std::string &message){
     binds["use special"] = [this, &message]() {
         handleSpecialFeature(message);
     };
+    
+    options["use special"] = "** with this option, you can kill anyone (except yourself).";
 }
 
 void MurdererProcessor::handleSpecialFeature(std::string& broadcastMessage) {

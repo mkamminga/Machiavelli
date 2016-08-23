@@ -45,14 +45,6 @@ bool GameController::start(){
             player->putCoins(game->takeCoins(2));
             player->add_cards(game->takeCards(2));
             
-            client->addHandler("show cards", [player, client]() {
-                auto cards = player->getCards();
-                client->write("Cards: \n");
-                for (auto card : cards) {
-                    client->write(" > "+ card->getName() + " - "+ std::to_string(card->getPoints()));
-                }
-                client->write("\n");
-            });
         }
         
         gameOver = false;
@@ -183,32 +175,50 @@ void GameController::callCharcaters () {
     
     if (currentRound->isFinalRound()) {
         gameOver = true;
-        auto winner = std::find_if(players.begin(), players.end(), [](const std::pair<std::shared_ptr<Player>, std::shared_ptr<Socket>>& it) {
-            return it.first->hasFinnishedFirst();
-        });
-        
-        auto winnerPlayer = winner.operator*().first;
-        
+        auto winner = determinWinner();
         for (auto currentPlayerClient : players) {
             std::vector<std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>>> otherPlayers;
             std::copy_if(players.begin(), players.end(), back_inserter(otherPlayers), [currentPlayerClient] (std::pair<std::shared_ptr<Player>, std::shared_ptr<ConsoleView>> it) {
                 return it.first != currentPlayerClient.first;
             });
             
-            roundView.displayFinalPoints(otherPlayers, currentPlayerClient, winnerPlayer);
+            roundView.displayFinalPoints(otherPlayers, currentPlayerClient, winner);
         }
     } else {
         roundView.broadcastToPlayers(players, "\n\n** New Round **\n\n");
     }
 }
 
+std::shared_ptr<Player> GameController::determinWinner () {
+    std::shared_ptr<Player> currentWinner = nullptr;
+    int heighestPoinst = 0;
+    for (auto playerClient : players) {
+        auto player = playerClient.first;
+        int points = player->calculateTotalPoints();
+        
+        if (currentWinner && points == heighestPoinst && player->getPoints() > currentWinner->getPoints()) {
+            currentWinner = player;
+        } else if (points >= heighestPoinst) {
+            currentWinner = player;
+        }
+    }
+    
+    return currentWinner;
+}
 
 void GameController::quit () {
-    roundView.broadcastToPlayers(players, "Shutting down now");
+    roundView.broadcastToPlayers(players, "Shutting down now\n");
+    gameOver = true;
+    for (int i = 0; i < 7; i++) {
+        processors[i] = nullptr;
+    }
+    
     for (auto clientPlayer : players){
         auto client = clientPlayer.second;
         
-        if (client && client->is_open()) client->close();
+        if (client && client->is_open()) {
+            client->close();
+        }
     }
 }
 

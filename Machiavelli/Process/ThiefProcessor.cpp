@@ -13,6 +13,8 @@ void ThiefProcessor::setupBinds(std::string &message){
     binds["use special"] = [this, &message]() {
         handleSpecialFeature(message);
     };
+    
+    options["use special"] = "** with this option you can steal from any character (even murdered characters)..";
 }
 
 void ThiefProcessor::handleSpecialFeature(std::string& broadcastMessage) {

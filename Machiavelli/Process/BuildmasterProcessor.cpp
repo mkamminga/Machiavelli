@@ -13,6 +13,9 @@ void BuildmasterProcessor::setupBinds(std::string &message){
     binds["use special"] = [this, &message]() {
         handleSpecialFeature(message);
     };
+    
+    options["use special"]              = "** alias of build: you can build upto 3 buildings";
+    options["build"]                    =  "you can build upto 3 buildings";
 }
 
 void BuildmasterProcessor::handlePickCardPhase(std::string& broadcastMessage) {
@@ -25,7 +28,7 @@ void BuildmasterProcessor::handlePickCardPhase(std::string& broadcastMessage) {
         player->add_card(card);
     }
     
-    broadcastMessage = "Player "+ player->get_name() + " has taken two cards.";
+    broadcastMessage = "** Player "+ player->get_name() + " has taken two cards. **";
     
     options.erase("receive coins");
     options.erase("receive cards");

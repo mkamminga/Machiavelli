@@ -147,12 +147,14 @@ std::string Socket::readline() const
 
 void Socket::write(const std::string& msg) const
 {
-	write(msg.c_str(), msg.length());
+    if (is_open())
+        write(msg.c_str(), msg.length());
 }
 
 void Socket::write(const char *buf, size_t len) const
 {
-	throw_if_min1(static_cast<int>(::send(sock, buf, (int)len, 0)));
+    if (is_open())
+        throw_if_min1(static_cast<int>(::send(sock, buf, (int)len, 0)));
 }
 
 void Socket::write(char c) const

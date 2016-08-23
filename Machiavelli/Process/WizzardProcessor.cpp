@@ -15,6 +15,8 @@ void WizzardProcessor::setupBinds(std::string &message){
     binds["use special"] = [this, &message]() {
         handleSpecialFeature(message);
     };
+    
+    options["use special"] = "** with this option you can either exchange your hand held cards (can be none) with those of any other player, or you can exchange them with game laid out pile (equal number)..";
 }
 
 void WizzardProcessor::handleSpecialFeature(std::string& broadcastMessage){

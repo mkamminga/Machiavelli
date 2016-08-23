@@ -18,8 +18,8 @@ void MerchantProcessor::setupBinds(std::string &message){
 void MerchantProcessor::askMainQuestion(std::string& message) {
     int num = round->getGame()->takeCoins(1);
     player->putCoins(num);
-    client->write("You have recived coins" + std::to_string(num)+ "\n");
-    roundView.broadcastToPlayers(players, "Player "+ player->get_name() + " has received "+ std::to_string(num) + " coins.\n" );
+    client->write("** You have recived one coin **\n");
+    roundView.broadcastToPlayers(players, "Player "+ player->get_name() + " has received one coin.\n" );
     MainProcessor::askMainQuestion(message);
 }
 

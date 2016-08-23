@@ -30,7 +30,7 @@ namespace machiavelli {
 void handle_client(shared_ptr<ConsoleView> client, GameController* gameController) // this function runs in a separate thread
 {
     try {
-        client->write("Welcome to Server 1.0! To quit, type 'quit'.\r\n");
+        client->write("Welcome to Server 1.0.\r\n");
 		client->write("What's your name?\r\n");
         client->write(machiavelli::prompt);
 		string name {client->readline()};
@@ -39,14 +39,16 @@ void handle_client(shared_ptr<ConsoleView> client, GameController* gameControlle
         
         gameController->addPlayer(player, client);
         
-        client->addHandler("quit", [gameController] () {
+        /*client->addHandler("quit", [gameController] () {
             gameController->quit();
-        });
+            
+            throw std::runtime_error("Command handling interupted");
+        });*/
         
         if (gameController->canStart()) {
-            client->write("You have been proclaimed king!.\r\n");
             gameController->start();
-
+            client->write("You have been proclaimed king!.\r\n");
+            
             while (!gameController->isGameOver()) { // game loop
                 try {
                     //Round start, 
@@ -96,7 +98,7 @@ int main(int argc, const char * argv[])
 				cerr << "server listening" << '\n';
 				unique_ptr<ConsoleView> client {server.accept()};
                 
-                if (!gameController.hasStarted() || gameController.isGameOver()){
+                if (!gameController.hasStarted()){
                     // communicate with client over new socket in separate thread
                     thread handler {handle_client, move(client), &gameController};
                     handlers.push_back(move(handler));

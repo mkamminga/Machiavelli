@@ -29,6 +29,13 @@ public:
     GameController();
     ~GameController(){
         quit();
+        for (auto clientPlayer : players){
+            auto client = clientPlayer.second;
+            
+            if (client && client->is_open()) {
+                client->close();
+            }
+        }
     }
     void addPlayer(std::shared_ptr<Player> player, std::shared_ptr<ConsoleView> client);
     bool start();
@@ -46,6 +53,7 @@ private:
     void resetPlayerCharacters();
     void devideCardsToPlayers(std::vector<std::shared_ptr<BaseCharacter>>& characters);
     std::shared_ptr<BaseCharacter> removeAndChoseCharacter(const std::string& question, std::shared_ptr<ConsoleView> client, std::vector<std::shared_ptr<BaseCharacter>>& characters);
+    std::shared_ptr<Player> determinWinner ();
     
     std::shared_ptr<Game> game = nullptr;
     std::map<int, std::unique_ptr<MainProcessor>> processors;
